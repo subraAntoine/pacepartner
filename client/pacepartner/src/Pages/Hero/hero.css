@@ -1,0 +1,21 @@
+.icon{
+    width: 100px;
+    position: absolute;
+    top:10px;
+
+}
+
+.text{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+}
+
+.hero-title{
+    font-size: 8rem
+}
+
+.hero-subtitle{
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}

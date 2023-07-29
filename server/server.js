@@ -8,6 +8,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
+const { userRouter } = require("./routes/users");
+
 const app = express();
 
 const corsOptions = {
@@ -18,6 +20,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
+
+//routes
+
+app.use("/users", userRouter);
+
+
 
 //connect to mongoDB
 const mongoURI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@pacepartner.boyyazb.mongodb.net/`;
