@@ -1,6 +1,7 @@
 import "./hero.css"
 import IconYellow from "../../Assets/IconYellow.png"
 import Button from "../../Components/Button/Button";
+import { Link } from "react-router-dom";
 export default function Hero() {
     return (
         <div className="hero">
@@ -10,8 +11,11 @@ export default function Hero() {
                 </div>
                 <div className="text">
                     <h1 className="hero-title">PacePartner</h1>
-                    <p className="hero-subtitle">A tool for runners to find their perfect running partner.</p>
-                    <Button text="Get started" />
+                    <p className="hero-subtitle">Unissez vos forces, repoussez vos limites.</p>
+                    <div className="link-container">
+                        <Link className="link-btn" to={"/auth"}>Se connecter</Link>
+                    </div>
+
                 </div>
             </div>
         </div>
