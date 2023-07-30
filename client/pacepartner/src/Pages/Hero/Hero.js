@@ -1,6 +1,7 @@
 import "./hero.css"
 import IconYellow from "../../Assets/IconYellow.png"
-import Button from "../../Components/Button/Button";
+import YellowMtn from "../../Assets/yeelow-mtn.svg"
+
 import { Link } from "react-router-dom";
 export default function Hero() {
     return (
@@ -17,6 +18,7 @@ export default function Hero() {
                     </div>
 
                 </div>
+                <img src={YellowMtn} alt="yellow-mtn" className="yellow-mtn"/>
             </div>
         </div>
     )

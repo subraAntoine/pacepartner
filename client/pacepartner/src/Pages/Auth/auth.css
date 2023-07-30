@@ -1,0 +1,59 @@
+form{
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    gap: 10px;
+
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 2px 2px 2px #c2c2c2;
+}
+
+Button{
+    width: 250px;
+    align-self: center;
+    margin-top: 50px;
+}
+
+h1{
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+label{
+    font-size: 1.3rem;
+}
+
+input{
+    font-size: 1.3rem;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #c2c2c2;
+}
+
+.sports-checkbox{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin-top: 20px;
+    align-self: center;
+
+}
+
+.checkbox-item{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.checkbox-item input{
+    width: 20px;
+    height: 20px;
+}

@@ -1,7 +1,7 @@
 import "./Button.css"
 export default function Button(props) {
     return (
-        <button className="button" onClick={props.onClick}>
+        <button type="submit" className="button" onClick={props.onClick}>
             {props.text}
         </button>
     )
