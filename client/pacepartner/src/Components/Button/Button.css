@@ -6,9 +6,24 @@
     font-size: 20px;
     cursor: pointer;
     transition: 0.2s ease-in-out;
+
 }
 
 .button:hover{
     box-shadow: -2px 2px 2px 0px #000000;
 
+}
+
+.auth-btn{
+    align-self: center;
+    margin-top: 30px;
+    width: 250px;
+    height: 50px;
+    font-size: 1.3rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--main-yellow);
+    transition: 0.1s ease-in-out;
+    margin-bottom: 10px;
 }

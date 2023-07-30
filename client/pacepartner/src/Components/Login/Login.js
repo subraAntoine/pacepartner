@@ -7,7 +7,7 @@ export default function Login() {
             <input type="email" name="email" id="email" />
             <label htmlFor="password">Password</label>
             <input type="password" name="password" id="password" />
-            <Button text={"Se connecter"}></Button>
+            <Button className={"auth-btn"} text={"Se connecter"}></Button>
         </form>
     )
 }

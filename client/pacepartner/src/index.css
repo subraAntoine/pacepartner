@@ -24,7 +24,10 @@
     font-size: 1.2rem;
     border-radius: 5px;
     transition: 0.1s ease-in-out;
-
+    position: absolute;
+    width: 150px;
+    text-align: center;
+    top: 10px;
 }
 
 .link-btn:hover{

@@ -19,7 +19,7 @@ export default function Auth() {
        <div className="Auth">
            <IconLogo></IconLogo>
            {
-                login ? <Login /> : <Register onRegister={handleRegister} />
+                login ? <Login className={"btn"} /> : <Register onRegister={handleRegister} />
            }
            {
                login ? <p className="auth-text">Pas encore de compte ? <span onClick={handleLogin}>S'inscrire</span></p> : <p className="auth-text">Déjà un compte ? <span onClick={handleLogin}>Se connecter</span></p>

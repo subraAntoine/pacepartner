@@ -4,7 +4,7 @@ import './IconLogo.css';
 export default function IconLogo() {
     return (
         <div className="logo">
-            <img src={IconYellow} alt="logo" />
+            <img className={"iconLogo"} src={IconYellow} alt="logo" />
         </div>
     )
 }

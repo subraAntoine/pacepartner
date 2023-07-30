@@ -12,26 +12,57 @@ export default function Register({onRegister}) {
     const [prenom, setPrenom] = useState("");
     const [sports, setSports] = useState([]);
 
+    const [passwordValid, setPasswordValid] = useState(false);
+    const [emailValid, setEmailValid] = useState(false);
+
+    const [error, setError] = useState("");
+
+
+
+    const validatePassword = (password) => {
+        // Vérifie s'il y a au moins une majuscule et un caractère spécial dans le mot de passe
+        const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+-])(?=.*[a-z]).{8,}$/;
+        return regex.test(password);
+    };
+
+    const validateEmail = (email) => {
+        // Vérifie si l'email est valide
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    const emptyFields = () => {
+        // Vérifie si les champs sont vides
+        return email === "" || password === "" || pseudo === "" || nom === "" || prenom === "" || sports.length === 0;
+    }
+
 
     const handleEmail = (e) => {
-        setEmail(e.target.value);
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+        setEmailValid(validateEmail(newEmail));
     }
 
     const handlePassword = (e) => {
-        setPassword(e.target.value);
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+        setPasswordValid(validatePassword(newPassword));
     }
 
     const handlePseudo = (e) => {
         setPseudo(e.target.value);
-        console.log(pseudo);
+
+
     }
 
     const handleNom = (e) => {
         setNom(e.target.value);
+
     }
 
     const handlePrenom = (e) => {
         setPrenom(e.target.value);
+        console.log(prenom);
     }
 
     const handleSports = (e) => {
@@ -47,7 +78,7 @@ export default function Register({onRegister}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            axios.post("http://localhost:3002/users/register", {
+             const response = await axios.post("http://localhost:3002/users/register", {
                 email,
                 password,
                 pseudo,
@@ -56,10 +87,13 @@ export default function Register({onRegister}) {
                 sports
 
             })
-            alert("Votre compte a bien été créé !")
-            onRegister();
+
+            if (response.status === 200) {
+                onRegister();
+            }
 
         } catch (error) {
+            setError(error.response.data.message);
             console.log(error);
         }
     }
@@ -68,12 +102,14 @@ export default function Register({onRegister}) {
 
 
     return (
+
         <form className="auth-form" onSubmit={handleSubmit}>
             <h1>Créer un compte</h1>
             <label htmlFor="email">Email</label>
             <input onChange={handleEmail} type="email" name="email" id="email" />
             <label htmlFor="password">Mot de passe</label>
-            <input onChange={handlePassword} type="password" name="password" id="password" />
+            <input onChange={handlePassword} type="password" name="password" id="password"/>
+            {passwordValid ? null : <p className="password-error">Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial.</p>}
             <label htmlFor="pseudo">Pseudo</label>
             <input onChange={handlePseudo} type="text" name="pseudo" id="pseudo" />
             <label htmlFor="nom">Nom</label>
@@ -88,16 +124,20 @@ export default function Register({onRegister}) {
                 </div>
                 <div className="checkbox-item">
                     <input onChange={handleSports} className="checkbox-input"  type="checkbox" name="sport" id="trail" />
-                    <label htmlFor="running">Trail</label>
+                    <label htmlFor="trail">Trail</label>
                 </div>
                 <div className="checkbox-item">
                     <input onChange={handleSports} className="checkbox-input"  type="checkbox" name="sport" id="velo" />
-                    <label htmlFor="running">Cyclisme</label>
+                    <label htmlFor="cyclisme">Cyclisme</label>
                 </div>
             </div>
 
 
-            <Button text={"Rejoins nous !"}></Button>
+            <Button className={"auth-btn"} text={"Rejoins nous !"} disabled={!passwordValid || !emailValid || emptyFields()}  ></Button>
+            <p className={"error-msg"}>{error}</p>
         </form>
+
+
+
     )
 }

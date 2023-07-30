@@ -12,6 +12,9 @@ const UserSchema = new mongoose.Schema({
     description: {type: String},
     photo: {type: String},
     dateNaissance: {type: Date},
+    isSubscribed: {type: Boolean, default: false},
+    subscriptionPlan: {type: String},
+    subscriptionId: {type: String},
 
 });
 
