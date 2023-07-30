@@ -28,7 +28,7 @@ app.use("/users", userRouter);
 
 
 //connect to mongoDB
-const mongoURI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@pacepartner.boyyazb.mongodb.net/`;
+const mongoURI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@pacepartner.boyyazb.mongodb.net/${process.env.DB_NAME}`;
 
 try {
     mongoose.connect(mongoURI, {

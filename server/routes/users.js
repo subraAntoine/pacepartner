@@ -22,4 +22,24 @@ router.post('/register', async (req, res) => {
     }
 )
 
+router.post('/login', async (req, res) => {
+    const {email, password} = req.body;
+    const user = await UserModel.findOne({email});
+
+    if(!user){
+        res.status(401).json({message: "Invalid credentials"});
+        return;
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if(!isPasswordValid){
+        res.status(401).json({message: "Invalid credentials"});
+        return;
+    }
+
+    const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
+    res.cookie("jwt", token, {httpOnly: true});
+})
+
 module.exports = {userRouter: router}
