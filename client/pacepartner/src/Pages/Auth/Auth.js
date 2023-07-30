@@ -11,11 +11,18 @@ export default function Auth() {
         setLogin(true);
     }
 
+    const handleLogin = () => {
+        setLogin(!login);
+    }
+
     return (
        <div className="Auth">
            <IconLogo></IconLogo>
            {
                 login ? <Login /> : <Register onRegister={handleRegister} />
+           }
+           {
+               login ? <p className="auth-text">Pas encore de compte ? <span onClick={handleLogin}>S'inscrire</span></p> : <p className="auth-text">Déjà un compte ? <span onClick={handleLogin}>Se connecter</span></p>
            }
 
 

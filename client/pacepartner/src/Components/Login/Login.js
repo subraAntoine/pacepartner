@@ -1,4 +1,4 @@
-
+import Button from "../Button/Button";
 export default function Login() {
     return (
         <form className="auth-form" action="">
@@ -7,7 +7,7 @@ export default function Login() {
             <input type="email" name="email" id="email" />
             <label htmlFor="password">Password</label>
             <input type="password" name="password" id="password" />
-            <button type="submit">Se connecter</button>
+            <Button text={"Se connecter"}></Button>
         </form>
     )
 }

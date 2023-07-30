@@ -17,6 +17,7 @@ Button{
     width: 250px;
     align-self: center;
     margin-top: 50px;
+    margin-bottom: 20px;
 }
 
 h1{
@@ -56,4 +57,20 @@ input{
 .checkbox-item input{
     width: 20px;
     height: 20px;
+}
+
+.auth-text{
+    text-align: center;
+    font-size: 1.3rem;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+span{
+
+    cursor: pointer;
+    text-decoration: underline;
 }
