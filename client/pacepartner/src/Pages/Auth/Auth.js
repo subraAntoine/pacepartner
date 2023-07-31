@@ -5,7 +5,7 @@ import IconLogo from "../../Components/IconLogo/IconLogo";
 import {useState} from "react";
 export default function Auth() {
 
-    const [login, setLogin] = useState(false);
+    const [login, setLogin] = useState(true);
 
     const handleRegister = () => {
         setLogin(true);

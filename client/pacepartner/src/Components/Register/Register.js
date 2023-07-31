@@ -2,6 +2,7 @@
 import Button from "../Button/Button";
 import {useState} from "react";
 import axios from "axios";
+import handleRegister from "../../Api/User/Register";
 
 export default function Register({onRegister}) {
 
@@ -76,27 +77,25 @@ export default function Register({onRegister}) {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-             const response = await axios.post("http://localhost:3002/users/register", {
-                email,
-                password,
-                pseudo,
-                nom,
-                prenom,
-                sports
-
-            })
+        try{
+            const response = await handleRegister(e, email, password, pseudo, nom, prenom, sports);
+            console.log(response);
 
             if (response.status === 200) {
+                setError("");
                 onRegister();
+            } else {
+                setError(response.response.data.message);
             }
+        } catch(err) {
 
-        } catch (error) {
-            setError(error.response.data.message);
-            console.log(error);
+            setError(err.response.data.message);
+
         }
+
     }
+
+
 
 
 
@@ -104,7 +103,7 @@ export default function Register({onRegister}) {
     return (
 
         <form className="auth-form" onSubmit={handleSubmit}>
-            <h1>Créer un compte</h1>
+            <h1 className={"form-title"}>Créer un compte</h1>
             <label htmlFor="email">Email</label>
             <input onChange={handleEmail} type="email" name="email" id="email" />
             <label htmlFor="password">Mot de passe</label>

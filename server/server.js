@@ -38,7 +38,7 @@ try {
         .then(() => console.log("MongoDB connected"))
         .catch(error => console.log("Error connecting to MongoDB:", error));
 } catch (error) {
-    console.log(error);
+    console.log(error)
 }
 
 const port = process.env.PORT || 5000;
