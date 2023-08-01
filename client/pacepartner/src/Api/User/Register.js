@@ -13,8 +13,6 @@ const handleRegister = async (e, email, password, pseudo, nom, prenom, sports) =
 
         })
 
-
-
         if (response.status === 200) {
 
             return response;
