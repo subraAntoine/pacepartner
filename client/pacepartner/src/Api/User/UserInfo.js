@@ -1,4 +1,8 @@
 import axios from "axios";
+
+
+
+
 const getUserInfo = async (userId) => {
     try {
         const response = await axios.post(`http://localhost:3002/users/user`, {
@@ -12,5 +16,8 @@ const getUserInfo = async (userId) => {
         console.log(error);
     }
 }
+
+
+
 
 export default getUserInfo;
