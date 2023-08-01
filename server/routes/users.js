@@ -54,13 +54,16 @@ router.post('/login', async (req, res) => {
 })
 
 
-router.post('/logout', (req, res) => {
+router.post('/logout', authToken, async (req, res) => {
+    try {
+        res.clearCookie("jwt");
+        res.status(200).json({ message: "Utilisateur déconnecté" });
+    } catch (err) {
+        res.status(500).json({ message: "Une erreur s'est produite lors de la déconnexion de l'utilisateur" });
+    }
+});
 
-    res.clearCookie("jwt");
-    res.status(200).json({message: "User logged out"});
-})
-
-router.get('/user', authToken, async (req, res) => {
+router.post('/user', authToken, async (req, res) => {
     try {
         const user = await UserModel.findById(req.userId);
         if (!user) {

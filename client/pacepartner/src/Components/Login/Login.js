@@ -1,11 +1,15 @@
 import Button from "../Button/Button";
 import {useState} from "react";
 import handleLogin from "../../Api/User/Login";
+
+import {useNavigate} from "react-router-dom";
 export default function Login() {
 
   const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+
+    const navigate = useNavigate();
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -23,7 +27,7 @@ export default function Login() {
             console.log(response);
 
             if (response) {
-
+                navigate("/home");
             } else {
                 setError("Email ou mot de passe incorrect");
             }
