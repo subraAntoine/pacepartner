@@ -65,12 +65,30 @@ router.post('/logout', authToken, async (req, res) => {
 });
 
 router.post('/user', authToken, async (req, res) => {
+
+    const LogedUser = {
+        email:"",
+        isSubscribed:"",
+        pseudo:"",
+        nom:"",
+        prenom:"",
+        sports:[""],
+    }
+
     try {
         const user = await UserModel.findById(req.userId);
         if (!user) {
+
             res.status(404).json({ message: "Utilisateur non trouvé" });
+
         } else {
-            res.status(200).json({ user: user });
+            LogedUser.email = user.email;
+            LogedUser.isSubscribed = user.isSubscribed;
+            LogedUser.pseudo = user.pseudo;
+            LogedUser.nom = user.nom;
+            LogedUser.prenom = user.prenom;
+            LogedUser.sports = user.sports;
+            res.status(200).json({ user: LogedUser });
         }
     } catch (err) {
         res.status(500).json({ message: "Une erreur s'est produite lors de la récupération des informations utilisateur" });

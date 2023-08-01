@@ -1,5 +1,19 @@
-.iconLogo{
+/*.iconLogo{
+    width: 100px;
+    position: absolute;
+    top:10px;
+}*/
+
+.leftmenu{
+
+
+    width: 100px;
+
+}
+
+.auth{
     width: 100px;
     position: absolute;
     top:10px;
 }
+

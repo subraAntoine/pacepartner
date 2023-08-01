@@ -1,0 +1,143 @@
+.left-menu{
+    border-right: solid #c4c4c4 1px;
+    width: 420px;
+    height: 100vh;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed;
+
+
+}
+.left-menu-wrapper{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100vh;
+
+}
+
+.home-menu-link{
+    height: 150px;
+    border-bottom: solid #b4b4b4 1px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 10px;
+    margin-bottom: 30px;
+
+}
+
+.profile-menu-link{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    border-radius: 10px;
+    margin: 0 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+    transition: .3s ease-in-out;
+
+
+
+}
+
+.pacepartner-texte{
+
+    color: black;
+    text-decoration: none;
+    font-size: 2.7rem;
+
+}
+
+.profile-menu-link:hover{
+
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.user-avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: contain;
+    z-index: 3;
+}
+
+.pages-menu-link{
+    margin: 45px 15px 100px 15px;
+
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-top: solid #b4b4b4 1px;
+    border-bottom: solid #b4b4b4 1px;
+    padding: 80px 0;
+
+}
+
+.user-name{
+    text-decoration: underline;
+    font-size: 1.3rem;
+    z-index: 3;
+
+}
+
+.page-link{
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    border-radius: 10px;
+    padding: 10px;
+
+    height: 50px;
+    position: relative;
+
+}
+
+.icon-menu-link{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+
+
+}
+
+.icon-link{
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+
+.page-link::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 12%;
+    background: var(--main-yellow);
+    transition: .3s ease-in-out;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+.page-link:hover::after{
+    width: 100%;
+}
+.link-page-name{
+    z-index: 3;
+}

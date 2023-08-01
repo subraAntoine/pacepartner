@@ -17,7 +17,7 @@ export default function Auth() {
 
     return (
        <div className="Auth">
-           <IconLogo></IconLogo>
+           <IconLogo className={"auth"}></IconLogo>
            {
                 login ? <Login className={"btn"} /> : <Register onRegister={handleRegister} />
            }
