@@ -58,6 +58,7 @@ router.post('/logout', authToken, async (req, res) => {
     try {
         res.clearCookie("jwt");
         res.status(200).json({ message: "Utilisateur déconnecté" });
+
     } catch (err) {
         res.status(500).json({ message: "Une erreur s'est produite lors de la déconnexion de l'utilisateur" });
     }
