@@ -71,7 +71,7 @@ export default function LeftMenu () {
                     </button>
 
 
-                    <Link to={"/"} className="icon-link">
+                    <Link to={"/parametres"} className="icon-link">
                         <MdOutlineSettingsInputComponent style={style}/>
                     </Link>
 

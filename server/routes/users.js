@@ -157,5 +157,22 @@ router.post('/isloged', authToken, async (req, res) => {
     }
 })
 
+router.post('/update', authToken, async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.userId);
+        if (!user) {
+            res.status(404).json({ message: "Utilisateur non trouvé" });
+        } else {
+            for(const key in req.body){
+                user[key] = req.body[key];
+            }
+            await user.save();
+            res.status(200).json({ message: "Informations utilisateur mises à jour"});
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Une erreur s'est produite lors de la mise à jour des informations utilisateur" });
+    }
+})
+
 
 module.exports = {userRouter: router}
