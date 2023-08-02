@@ -15,6 +15,7 @@ const UserSchema = new mongoose.Schema({
     isSubscribed: {type: Boolean, default: false},
     subscriptionPlan: {type: String},
     subscriptionId: {type: String},
+    followings: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}]
 
 });
 

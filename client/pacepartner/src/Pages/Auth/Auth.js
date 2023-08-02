@@ -2,10 +2,14 @@ import Login from "../../Components/Login/Login";
 import Register from "../../Components/Register/Register";
 import "./auth.css";
 import IconLogo from "../../Components/IconLogo/IconLogo";
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import isLoged from "../../Api/User/IsLoged";
 export default function Auth() {
 
     const [login, setLogin] = useState(true);
+
+    const navigate = useNavigate();
 
     const handleRegister = () => {
         setLogin(true);
@@ -14,6 +18,23 @@ export default function Auth() {
     const handleLogin = () => {
         setLogin(!login);
     }
+
+    useEffect(() => {
+        const handleIsLoged = async () => {
+            try {
+                const response = await isLoged();
+                console.log(response);
+                if (response.status === 200) {
+                    navigate("/home");
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        handleIsLoged()
+    },[])
+
+
 
     return (
        <div className="Auth">

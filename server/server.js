@@ -7,6 +7,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const path = require('path');
+
 
 const { userRouter } = require("./routes/users");
 
@@ -16,6 +18,10 @@ const corsOptions = {
     origin: "http://localhost:3000",
     credentials: true,
 }
+
+
+
+
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -40,6 +46,9 @@ try {
 } catch (error) {
     console.log(error)
 }
+
+app.use('/images', express.static(path.join(__dirname, 'Images')));
+
 
 const port = process.env.PORT || 5000;
 

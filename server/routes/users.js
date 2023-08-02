@@ -3,10 +3,56 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const authToken = require('../middlewares/authToken');
 const {UserModel} = require('../model/User');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+const mongoose = require('mongoose');
 
 
 const router = express.Router();
 
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../Images'));
+
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + file.originalname);
+    }
+});
+
+const upload = multer({storage: storage});
+
+
+router.post('/uploadProfilePic', authToken, upload.single('file'), async (req, res) => {
+    try{
+        const user = await UserModel.findById(req.userId);
+        if (!user) {
+            res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+        else {
+            if(user.photo){
+                const filePath = path.join(__dirname, '../Images', user.photo);
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                } else {
+                    console.log(`Le fichier "${filePath}" n'existe pas.`);
+                }
+            }
+            user.photo = req.file.filename;
+            await user.save();
+            res.status(200).json({ message: "Photo de profil mise à jour", filename: req.file.filename });
+        }
+
+
+
+    } catch (err) {
+        res.status(500).json({ message: "Une erreur s'est produite lors de la mise à jour de la photo de profil" });
+        console.log(err);
+    }
+
+});
 
 
 router.post('/register', async (req, res) => {
@@ -73,6 +119,7 @@ router.post('/user', authToken, async (req, res) => {
         nom:"",
         prenom:"",
         sports:[""],
+        photo:""
     }
 
     try {
@@ -82,13 +129,28 @@ router.post('/user', authToken, async (req, res) => {
             res.status(404).json({ message: "Utilisateur non trouvé" });
 
         } else {
+            const photo = 'http://localhost:3002/images/' + user.photo;
             LogedUser.email = user.email;
             LogedUser.isSubscribed = user.isSubscribed;
             LogedUser.pseudo = user.pseudo;
             LogedUser.nom = user.nom;
             LogedUser.prenom = user.prenom;
             LogedUser.sports = user.sports;
+            LogedUser.photo = photo;
             res.status(200).json({ user: LogedUser });
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Une erreur s'est produite lors de la récupération des informations utilisateur" });
+    }
+})
+
+router.post('/isloged', authToken, async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.userId);
+        if (!user) {
+                res.status(404).json({ message: "Utilisateur non trouvé" });
+        } else {
+            res.status(200).json({ message: "Utilisateur connecté" });
         }
     } catch (err) {
         res.status(500).json({ message: "Une erreur s'est produite lors de la récupération des informations utilisateur" });

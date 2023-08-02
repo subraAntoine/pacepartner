@@ -12,6 +12,7 @@ export default function Home() {
 
     useEffect(() => {
         const fetchData = async () => {
+            let isCancelled = false;
             try {
                 const response = await getUserInfo();
 
@@ -19,23 +20,36 @@ export default function Home() {
                     navigate("/auth");
                     return;
                 }
-                setUser(response.user);
+                if(!isCancelled) {
+                    setUser(response.user);
+
+
+
+                }
 
             } catch (error) {
 
                 navigate("/auth");
 
             }
+            return () => {
+                isCancelled = true;
+            }
         }
         fetchData();
+
 
     }, []);
 
 
 
     return (
-        <div>
+        <div className={"home-page-container"}>
             <LeftMenu/>
+
+            {
+
+            }
         </div>
     )
 }
