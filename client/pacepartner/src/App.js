@@ -4,7 +4,7 @@ import Hero from "./Pages/Hero/Hero"
 import Auth from "./Pages/Auth/Auth"
 import Home from "./Pages/Home/Home";
 
-import Parametres from "./Pages/Profile/Parametres";
+import Parametres from "./Pages/Parametres/Parametres";
 
 
 function App() {

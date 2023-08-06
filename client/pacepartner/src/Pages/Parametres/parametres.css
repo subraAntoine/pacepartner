@@ -23,6 +23,7 @@
     box-shadow: 2px 2px 5px 0px rgba(145, 145, 145, 0.75);
     min-width: 250px;
     margin-bottom: 50px;
+    transition: ease-in-out;
 
 }
 

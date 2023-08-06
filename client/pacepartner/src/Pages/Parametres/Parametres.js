@@ -7,6 +7,7 @@ import {MdCreate, MdSave, MdClear} from "react-icons/md";
 import {useNavigate} from "react-router-dom";
 import getUserInfo from "../../Api/User/UserInfo";
 import handleUpdate from "../../Api/User/Update";
+
 export default function Parametres() {
 
     const {user, setUser} = useUser();
@@ -81,13 +82,23 @@ export default function Parametres() {
     }
 
     const handleUpdateData = async () => {
-        try{
-            const response = await handleUpdate(data);
-            console.log(response);
-            setEdit(!edit);
-        } catch (err) {
-            console.log(err);
+        if (data){
+            try{
+                const response = await handleUpdate(data);
+                console.log(response);
+                setEdit(!edit);
+            } catch (err) {
+                console.log(err);
+            }
         }
+        else{
+           setEdit(!edit)
+        }
+    }
+
+    function handleInputChange(value) {
+        setData({...data, "localisation": value});
+        console.log(data);
     }
 
 
@@ -101,7 +112,7 @@ export default function Parametres() {
             <div className="profile-content-wrapper">
                 <h1 className={"page-title"}>Paramètres</h1>
                 <div className="photo">
-                    <h3 className="item-title">Photo de profil</h3>
+                    <h3 className="item-title">Photo de profil :</h3>
                     <div className="photo-content">
                         {
                             user.photo && <img src={user.photo} alt="Avatar" className={"user-avatar settings-picture"}/>
@@ -132,10 +143,17 @@ export default function Parametres() {
                             <label htmlFor="nom">Prénom :</label>
                             <input onChange={handleData} className={"input-item"} type="text" name={"prenom"} id={"prenom"} defaultValue={user.prenom} disabled={!edit}/>
                         </div>
+                        <div className="profile-info-item">
+                            <label htmlFor="nom">Ville:</label>
+
+                        </div>
                     </div>
                 </div>
-                <button onClick={handleEdit}>Modifier</button>
-                <button onClick={handleUpdateData}>Enregistrer</button>
+                {
+                    !edit ? <button onClick={handleEdit}>Modifier</button> : <button onClick={handleUpdateData}>Enregistrer</button>
+                }
+
+
                 
             </div>
 
