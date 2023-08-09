@@ -137,6 +137,9 @@ router.post('/user', authToken, async (req, res) => {
             LogedUser.prenom = user.prenom;
             LogedUser.sports = user.sports;
             LogedUser.photo = photo;
+            LogedUser.localisation = user.localisation;
+            LogedUser.dateNaissance = user.dateNaissance.toISOString().split('T')[0];
+            LogedUser.description = user.description;
             res.status(200).json({ user: LogedUser });
         }
     } catch (err) {

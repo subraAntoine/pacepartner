@@ -1,0 +1,22 @@
+.mapbox-input{
+    width: 80%;
+    padding: 10px;
+    font-size: 1.25rem;
+}
+
+.mapbox-li{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    font-size: 1.1rem;
+    border: solid 1px black;
+    width: 80%;
+    transition: .2s ease-in-out;
+    cursor: pointer;
+
+}
+
+.mapbox-li:hover{
+    background: #C4FF61;
+}

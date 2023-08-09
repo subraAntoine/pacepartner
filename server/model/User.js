@@ -16,7 +16,6 @@ const UserSchema = new mongoose.Schema({
     subscriptionPlan: {type: String},
     subscriptionId: {type: String},
     followings: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}]
-
 });
 
 const UserModel = mongoose.model('users', UserSchema);
