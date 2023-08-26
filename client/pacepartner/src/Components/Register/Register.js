@@ -73,6 +73,7 @@ export default function Register({onRegister}) {
         } else {
             setSports(sports.filter(sport => sport !== e.target.id));
         }
+        console.log(sports);
 
     }
 

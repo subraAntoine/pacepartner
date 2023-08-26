@@ -7,7 +7,6 @@ const UserSchema = new mongoose.Schema({
     nom: {type: String, required: true},
     prenom: {type: String, required: true},
     sports: [{type: String, required: true}],
-    niveau: {type: String},
     localisation: {type: String},
     description: {type: String},
     photo: {type: String},
@@ -15,7 +14,21 @@ const UserSchema = new mongoose.Schema({
     isSubscribed: {type: Boolean, default: false},
     subscriptionPlan: {type: String},
     subscriptionId: {type: String},
-    followings: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}]
+    followings: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
+    followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
+    notifications: [{type: mongoose.Schema.Types.ObjectId, ref: 'notifications'}],
+    record5km: {type: String},
+    record10km: {type: String},
+    recordSemi: {type: String},
+    recordMarathon: {type: String},
+    longestRun: {type: Number},
+    longestBike: {type: Number},
+    VMA: {type: Number},
+    FTP: {type: Number},
+    RunVolumeHebdo: {type: Number},
+    BikeVolumeHebdo: {type: Number},
+    nbSortiesRunningHebdo: {type: Number},
+    nbSortiesBikeHebdo: {type: Number}
 });
 
 const UserModel = mongoose.model('users', UserSchema);

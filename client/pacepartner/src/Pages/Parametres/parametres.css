@@ -91,7 +91,7 @@
     margin-bottom: 50px;
     box-shadow: 2px 2px 5px 0px rgba(145, 145, 145, 0.75);
     border-radius: 10px;
-    padding: 20px;
+    padding: 30px 20px;
     width: 1000px;
 }
 
@@ -123,10 +123,27 @@
 
 .area-input{
     width: 80%;
-    height: 200px;
+    min-height: 50px;
     resize: none;
     border-radius: 5px ;
     border: #cbcbcb solid 1px;
 }
 
+.item-desc{
+    font-size: 1rem;
+    font-weight: 400;
+    color: #6c757d;
+}
+.format-error-text{
+    color: red;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.indice-title{
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
 

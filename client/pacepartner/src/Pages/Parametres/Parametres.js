@@ -18,6 +18,14 @@ export default function Parametres() {
     const [editPhoto, setEditPhoto] = useState(false);
     const [data, setData] = useState(null);
     const [updateDataTrigger, setUpdateDataTrigger] = useState(false);
+    const [sports, setSports] = useState([]);
+    const [validFormat, setValidFormat] = useState({
+        record5km: true,
+        record10km: true,
+        recordSemi: true,
+        recordMarathon: true
+    });
+
 
     const handleImage = (e) => {
         setFile(e.target.files[0]);
@@ -62,7 +70,7 @@ export default function Parametres() {
                 }
                 if(!isCancelled) {
                     setUser(response.user);
-
+                    setSports(response.user.sports);
                 }
 
             } catch (error) {
@@ -77,7 +85,6 @@ export default function Parametres() {
         }
         fetchData();
 
-
     }, [updateDataTrigger]);
 
     const handleData = (e) => {
@@ -88,6 +95,7 @@ export default function Parametres() {
     const handleUpdateData = async () => {
         if (data){
             try{
+                setData({ ...data, "sports": sports});
                 const response = await handleUpdate(data);
                 console.log(response);
                 setEdit(!edit);
@@ -107,6 +115,43 @@ export default function Parametres() {
         setData({...data, "localisation": value});
         console.log(data);
     }
+
+    const handleSportsData = (e) => {
+        const sportId = e.target.id;
+        const isChecked = e.target.checked;
+
+        // Mettre à jour la liste des sports en fonction de la case cochée/décochée
+        let updatedSports;
+        if (isChecked) {
+            updatedSports = [...sports, sportId];
+        } else {
+            updatedSports = sports.filter(sport => sport !== sportId);
+        }
+        console.log(updatedSports);
+        setSports(updatedSports);
+        setData({...data, "sports": updatedSports});
+    };
+
+    const isTimeFormatValid = (time) => {
+        const timePattern = /^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/;
+        return timePattern.test(time);
+    };
+    const handleTimeData = (e) => {
+        if(isTimeFormatValid(e.target.value)) {
+            setData({...data, [e.target.name] : e.target.value});
+            setValidFormat({...validFormat, [e.target.name] : true});
+        } else{
+            setValidFormat({...validFormat, [e.target.name] : false});
+        }
+        console.log(data);
+    }
+
+
+
+
+
+
+
 
 
 
@@ -175,6 +220,66 @@ export default function Parametres() {
                             <textarea onChange={handleData} className={"input-item area-input"} name="description" id="description" cols="30" rows="10" defaultValue={user.description} disabled={!edit}></textarea>
                         </div>
 
+                        <div className="profile-info-item">
+                            <label htmlFor="nom">Sports :</label>
+                            <div className="sports-checkbox" >
+                                <div className="checkbox-item">
+                                    <input onClick={handleSportsData}  className="checkbox-input" type="checkbox" name="sport" id="running" value={"running"} defaultChecked={user && user.sports && user.sports.includes("running")} disabled={!edit} />
+                                    <label htmlFor="running">Running</label>
+                                </div>
+                                <div className="checkbox-item">
+                                    <input onClick={handleSportsData}  className="checkbox-input"  type="checkbox" name="sport" id="trail" value={"trail"} defaultChecked={user && user.sports && user.sports.includes("trail")} disabled={!edit}  />
+                                    <label htmlFor="trail">Trail</label>
+                                </div>
+                                <div className="checkbox-item">
+                                    <input onClick={handleSportsData}  className="checkbox-input"  type="checkbox" name="sport" id="velo" value={"velo"} defaultChecked={user && user.sports && user.sports.includes("velo")} disabled={!edit} />
+                                    <label htmlFor="cyclisme">Cyclisme</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div className="profile-info">
+                        <h3 className="item-title">Indices de performances</h3>
+                        <h4 className={"item-desc"}>(Ces données sont uniquement visibles par vous-même et sont utilisées pour trouver des partenaires de votre niveau.)</h4>
+                        <div className="profile-info-item">
+                            {
+                                user && user.sports && (user.sports.includes("trail") || user.sports.includes("running")) && (
+                                    <>
+                                        <p className={"indice-title"}>Indices de course à pied et trail :</p>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="record5km">record 5km :</label>
+                                            <input onChange={handleTimeData} className={"input-item"} type="text" name={"record5km"} id={"record5km"} defaultValue={user.record5km} disabled={!edit}/>
+                                            {
+                                                !validFormat.record5km && <p className={"format-error-text"}>Le temps doit être au format "HH:MM:SS"</p>
+                                            }
+                                        </div>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="record10km">record 10km :</label>
+                                            <input onChange={handleTimeData} className={"input-item"} type="text" name={"record10km"} id={"record10km"} defaultValue={user.record10km} disabled={!edit}/>
+                                            {
+                                                !validFormat.record10km && <p className={"format-error-text"}>Le temps doit être au format "HH:MM:SS"</p>
+                                            }
+                                        </div>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="recordSemi">record semi-marathon :</label>
+                                            <input onChange={handleTimeData} className={"input-item"} type="text" name={"recordSemi"} id={"recordSemi"} defaultValue={user.recordSemi} disabled={!edit}/>
+                                            {
+                                                !validFormat.recordSemi && <p className={"format-error-text"}>Le temps doit être au format "HH:MM:SS"</p>
+                                            }
+                                        </div>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="recordSemi">record marathon :</label>
+                                            <input onChange={handleTimeData} className={"input-item"} type="text" name={"recordMarathon"} id={"recordMarathon"} defaultValue={user.recordMarathon} disabled={!edit}/>
+                                            {
+                                                !validFormat.recordMarathon && <p className={"format-error-text"}>Le temps doit être au format "HH:MM:SS"</p>
+                                            }
+                                        </div>
+                                    </>
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
                 {

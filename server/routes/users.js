@@ -112,15 +112,6 @@ router.post('/logout', authToken, async (req, res) => {
 
 router.post('/user', authToken, async (req, res) => {
 
-    const LogedUser = {
-        email:"",
-        isSubscribed:"",
-        pseudo:"",
-        nom:"",
-        prenom:"",
-        sports:[""],
-        photo:""
-    }
 
     try {
         const user = await UserModel.findById(req.userId);
@@ -130,17 +121,12 @@ router.post('/user', authToken, async (req, res) => {
 
         } else {
             const photo = 'http://localhost:3002/images/' + user.photo;
-            LogedUser.email = user.email;
-            LogedUser.isSubscribed = user.isSubscribed;
-            LogedUser.pseudo = user.pseudo;
-            LogedUser.nom = user.nom;
-            LogedUser.prenom = user.prenom;
-            LogedUser.sports = user.sports;
-            LogedUser.photo = photo;
-            LogedUser.localisation = user.localisation;
-            LogedUser.dateNaissance = user.dateNaissance.toISOString().split('T')[0];
-            LogedUser.description = user.description;
-            res.status(200).json({ user: LogedUser });
+            const dateNaissance = user.dateNaissance.toISOString().split('T')[0];
+            const userWithoutPassword = {...user._doc};
+            delete userWithoutPassword.password;
+            userWithoutPassword.photo = photo;
+            userWithoutPassword.dateNaissance = dateNaissance;
+            res.status(200).json({ user: userWithoutPassword });
         }
     } catch (err) {
         res.status(500).json({ message: "Une erreur s'est produite lors de la récupération des informations utilisateur" });
