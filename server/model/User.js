@@ -26,7 +26,8 @@ const UserSchema = new mongoose.Schema({
     VMA: {type: Number},
     FTP: {type: Number},
     RunVolumeHebdo: {type: Number},
-    BikeVolumeHebdo: {type: Number}
+    BikeVolumeHebdo: {type: Number},
+    NbEntrainementParticipe: {type: Number, default: 0},
 });
 
 const UserModel = mongoose.model('users', UserSchema);

@@ -223,6 +223,7 @@ export default function Parametres() {
             <div className="profile-content-wrapper">
 
                 <h1 className={"page-title"}>Paramètres</h1>
+
                 <div className="circle-top-right"></div>
 
                 <div className="photo-wrapper">

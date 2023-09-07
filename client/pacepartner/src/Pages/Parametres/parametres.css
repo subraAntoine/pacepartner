@@ -54,11 +54,11 @@
 
     margin-bottom: 20px;
 }
-
 .page-title{
+    font-size: 2rem;
+    font-weight: 600;
     margin-bottom: 50px;
 }
-
 .photo-input{
     width: 0.1px;
     height: 0.1px;

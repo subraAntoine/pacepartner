@@ -48,11 +48,11 @@ export default function LeftMenu () {
                         <MdOutlineHome style={style}/>
                         <h3 className={"link-page-name"}>Accueil</h3>
                     </Link>
-                    <Link to={"/"} className="page-link">
+                    <Link to={"/communaute"} className="page-link">
                         <MdOutlineDiversity2 style={style}/>
                         <h3 className={"link-page-name"}>Communauté</h3>
                     </Link>
-                    <Link to={"/"} className="page-link">
+                    <Link to={"/entrainement"} className="page-link">
                         <MdOutlineDirectionsRun style={style}/>
                         <h3 className={"link-page-name"}>Entraînements</h3>
                     </Link>
