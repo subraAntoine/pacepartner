@@ -136,7 +136,7 @@
     height: 100%;
     width: 12%;
     background: var(--main-yellow);
-    transition: .5s ease-in-out;
+    transition: .3s ease-in-out;
     border-radius: 10px;
     z-index: 2;
 }

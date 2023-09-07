@@ -23,7 +23,13 @@ export default function Parametres() {
         record5km: true,
         record10km: true,
         recordSemi: true,
-        recordMarathon: true
+        recordMarathon: true,
+        VMA: true,
+        RunVolumeHebdo: true,
+        longestRun: true,
+        FTP: true,
+        BikeVolumeHebdo: true,
+        longestBike: true
     });
 
 
@@ -146,10 +152,63 @@ export default function Parametres() {
         console.log(data);
     }
 
+    const handleVMAData = (e) => {
+        if(e.target.value <= 25 && e.target.value >= 8) {
+            setData({...data, [e.target.name] : e.target.value});
+            setValidFormat({...validFormat, [e.target.name] : true});
+        } else{
+            setValidFormat({...validFormat, [e.target.name] : false});
+        }
+    }
 
+    const handleVolumeData = (e) => {
+        if(e.target.value <= 400 && e.target.value >= 0) {
+            setData({...data, [e.target.name] : e.target.value});
+            setValidFormat({...validFormat, [e.target.name] : true});
+        } else{
+            setValidFormat({...validFormat, [e.target.name] : false});
+        }
 
+    }
 
+    const handleLongestRunData = (e) => {
+        if(e.target.value <= 500 && e.target.value >= 0) {
+            setData({...data, [e.target.name] : e.target.value});
+            setValidFormat({...validFormat, [e.target.name] : true});
+        } else{
+            setValidFormat({...validFormat, [e.target.name] : false});
+        }
+    }
 
+    const handleFTPData = (e) => {
+        if(e.target.value <= 500 && e.target.value >= 0) {
+            setData({...data, [e.target.name] : e.target.value});
+            setValidFormat({...validFormat, [e.target.name] : true});
+        } else{
+            setValidFormat({...validFormat, [e.target.name] : false});
+        }
+
+    }
+
+    const handleLongestBikeData = (e) => {
+        if(e.target.value <= 1000 && e.target.value >= 0) {
+            setData({...data, [e.target.name] : e.target.value});
+            setValidFormat({...validFormat, [e.target.name] : true});
+        } else{
+            setValidFormat({...validFormat, [e.target.name] : false});
+        }
+
+    }
+
+    const handleBikeVolumeData = (e) => {
+        if(e.target.value <= 3000 && e.target.value >= 0) {
+            setData({...data, [e.target.name] : e.target.value});
+            setValidFormat({...validFormat, [e.target.name] : true});
+        } else{
+            setValidFormat({...validFormat, [e.target.name] : false});
+        }
+
+    }
 
 
 
@@ -247,7 +306,7 @@ export default function Parametres() {
                             {
                                 user && user.sports && (user.sports.includes("trail") || user.sports.includes("running")) && (
                                     <>
-                                        <p className={"indice-title"}>Indices de course à pied et trail :</p>
+                                        <p className={"indice-title"}>Indices de performances de course à pied et de trail :</p>
                                         <div className="profile-info-item">
                                             <label htmlFor="record5km">record 5km :</label>
                                             <input onChange={handleTimeData} className={"input-item"} type="text" name={"record5km"} id={"record5km"} defaultValue={user.record5km} disabled={!edit}/>
@@ -270,10 +329,59 @@ export default function Parametres() {
                                             }
                                         </div>
                                         <div className="profile-info-item">
-                                            <label htmlFor="recordSemi">record marathon :</label>
+                                            <label htmlFor="recordMarathon">record marathon :</label>
                                             <input onChange={handleTimeData} className={"input-item"} type="text" name={"recordMarathon"} id={"recordMarathon"} defaultValue={user.recordMarathon} disabled={!edit}/>
                                             {
                                                 !validFormat.recordMarathon && <p className={"format-error-text"}>Le temps doit être au format "HH:MM:SS"</p>
+                                            }
+                                        </div>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="VMA">VMA :</label>
+                                            <input onChange={handleVMAData} className={"input-item"} type="number" name={"VMA"} id={"VMA"} defaultValue={user.VMA} disabled={!edit}/>
+                                            {
+                                                !validFormat.VMA && <p className={"format-error-text"}>La VMA doit être comprise entre 8 et 24km/h.</p>
+                                            }
+                                        </div>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="RunVolumeHebdo">Volume hebdomadaire de course à pied (km) :</label>
+                                            <input onChange={handleVolumeData} className={"input-item"} type="number" name={"RunVolumeHebdo"} id={"RunVolumeHebdo"} defaultValue={user.RunVolumeHebdo} disabled={!edit}/>
+                                            {
+                                                !validFormat.RunVolumeHebdo && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 400.</p>
+                                            }
+                                        </div>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="longestRun">Plus longue sortie course à pied (km) :</label>
+                                            <input onChange={handleLongestRunData} className={"input-item"} type="number" name={"longestRun"} id={"longestRun"} defaultValue={user.longestRun} disabled={!edit}/>
+                                            {
+                                                !validFormat.longestRun && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 500.</p>
+                                            }
+                                        </div>
+                                    </>
+                                )
+                            }
+                            {
+                                user && user.sports && user.sports.includes("velo") && (
+                                    <>
+                                        <p className={"indice-title"}>Indices de performances de cyclisme :</p>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="FTP">FTP (W) :</label>
+                                            <input onChange={handleFTPData} className={"input-item"} type="number" name={"FTP"} id={"FTP"} defaultValue={user.FTP} disabled={!edit}/>
+                                            {
+                                                !validFormat.FTP && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 500.</p>
+                                            }
+                                        </div>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="longestBike">Plus longue sortie cyclisme (km) :</label>
+                                            <input onChange={handleLongestBikeData} className={"input-item"} type="number" name={"longestBike"} id={"longestBike"} defaultValue={user.longestBike} disabled={!edit}/>
+                                            {
+                                                !validFormat.longestBike && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 1000.</p>
+                                            }
+                                        </div>
+                                        <div className="profile-info-item">
+                                            <label htmlFor="BikeVolumeHebdo">Volume hebdomadaire de cyclisme (km) :</label>
+                                            <input onChange={handleBikeVolumeData} className={"input-item"} type="number" name={"BikeVolumeHebdo"} id={"BikeVolumeHebdo"} defaultValue={user.BikeVolumeHebdo} disabled={!edit}/>
+                                            {
+                                                !validFormat.BikeVolumeHebdo && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 3000.</p>
                                             }
                                         </div>
                                     </>
