@@ -11,6 +11,7 @@ const path = require('path');
 
 
 const { userRouter } = require("./routes/users");
+const { entrainementRouter } = require("./routes/entrainement");
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(cookieParser());
 //routes
 
 app.use("/users", userRouter);
+app.use("/entrainements", entrainementRouter);
 
 
 

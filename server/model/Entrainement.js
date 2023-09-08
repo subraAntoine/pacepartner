@@ -1,0 +1,25 @@
+const mongoose = require('mongoose');
+
+const EntrainementSchema = new mongoose.Schema({
+    dateEntrainement: {type: Date, required: true},
+    heureEntrainement: {type: String, required: true},
+    typeEntrainement: {type: String, required: true},
+    lieuEntrainement: {type: String, required: true},
+    descriptionEntrainement: {type: String, required: true},
+    participants: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
+    organisateur: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+    nbParticipants: {type: Number, default: 0},
+    nbMaxParticipants: {type: Number, required: true},
+    isPrivate: {type: Boolean, default: false},
+    isCancelled: {type: Boolean, default: false},
+    isFinished: {type: Boolean, default: false},
+    isFull: {type: Boolean, default: false},
+    sportEntainement: {type: String, required: true},
+    distanceEntrainement: {type: Number, required: true},
+    dureeEntrainement: {type: Number, required: true},
+    deniveleEntrainement: {type: Number, required: true},
+});
+
+const EntrainementModel = mongoose.model('entrainements', EntrainementSchema);
+
+module.exports = {EntrainementModel};
