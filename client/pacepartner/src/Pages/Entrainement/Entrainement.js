@@ -3,6 +3,7 @@ import "./entrainement.css";
 import LeftMenu from "../../Layout/LeftMenu/LeftMenu";
 import {MdAddCircle, MdAddCircleOutline} from "react-icons/md";
 import {useState} from "react";
+import CreationEntrainement from "../../Components/CreationEntrainement/CreationEntrainement";
 export default function Entrainement () {
 
     const [isNewEntrainementHovered, setIsNewEntrainementHovered] = useState(false);
@@ -19,11 +20,11 @@ export default function Entrainement () {
             <LeftMenu></LeftMenu>
             <div className="entrainement-page-content-wrapper">
                 <h1> Parcourir les entraînements PacePartner </h1>
+                <CreationEntrainement></CreationEntrainement>
                 <div className="new-entrainement-wrapper">
                     {
                         isNewEntrainementHovered ? <MdAddCircle onMouseLeave={handleHoverIcon} style={newEntrainementIconStyle}/> : <MdAddCircleOutline onMouseEnter={handleHoverIcon} style={newEntrainementIconStyle}/>
                     }
-
                 </div>
             </div>
 

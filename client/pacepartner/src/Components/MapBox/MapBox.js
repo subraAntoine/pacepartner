@@ -13,7 +13,7 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoiYW50b2luZXN1YnJhIiwiYSI6ImNsbDB5eWg4aTBrZGozanF
 mapboxgl.accessToken = MAPBOX_TOKEN;
 const geocodingClient = MapboxGeocoding({ accessToken: mapboxgl.accessToken });
 
-function MapBox({onSuggestionSelected, disabled, defaultLoc}) {
+function MapBox({onSuggestionSelected, disabled, defaultLoc, type}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
 
@@ -27,7 +27,7 @@ function MapBox({onSuggestionSelected, disabled, defaultLoc}) {
         try {
             const response = await geocodingClient.forwardGeocode({
                 query: input,
-                types: ['place'],
+                types: [type],
             }).send();
             setSuggestions(response.body.features);
         } catch (error) {

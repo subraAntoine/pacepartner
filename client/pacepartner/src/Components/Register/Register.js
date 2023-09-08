@@ -105,30 +105,30 @@ export default function Register({onRegister}) {
 
         <form className="auth-form" onSubmit={handleSubmit}>
             <h1 className={"form-title"}>Créer un compte</h1>
-            <label htmlFor="email">Email</label>
-            <input onChange={handleEmail} type="email" name="email" id="email" />
-            <label htmlFor="password">Mot de passe</label>
-            <input onChange={handlePassword} type="password" name="password" id="password"/>
+            <label className={"auth-label"} htmlFor="email">Email</label>
+            <input className={"auth-input"} onChange={handleEmail} type="email" name="email" id="email" />
+            <label className={"auth-label"} htmlFor="password">Mot de passe</label>
+            <input className={"auth-input"} onChange={handlePassword} type="password" name="password" id="password"/>
             {passwordValid ? null : <p className="password-error">Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial.</p>}
-            <label htmlFor="pseudo">Pseudo</label>
-            <input onChange={handlePseudo} type="text" name="pseudo" id="pseudo" />
-            <label htmlFor="nom">Nom</label>
-            <input onChange={handleNom} type="text" name="nom" id="nom" />
-            <label htmlFor="prenom">Prénom</label>
-            <input onChange={handlePrenom} type="text" name="prenom" id="prenom" />
-            <label htmlFor="sports">Quels sports pratiques-tu ?</label>
+            <label className={"auth-label"} htmlFor="pseudo">Pseudo</label>
+            <input className={"auth-input"} onChange={handlePseudo} type="text" name="pseudo" id="pseudo" />
+            <label className={"auth-label"} htmlFor="nom">Nom</label>
+            <input className={"auth-input"} onChange={handleNom} type="text" name="nom" id="nom" />
+            <label className={"auth-label"} htmlFor="prenom">Prénom</label>
+            <input className={"auth-input"} onChange={handlePrenom} type="text" name="prenom" id="prenom" />
+            <label className={"auth-label"} htmlFor="sports">Quels sports pratiques-tu ?</label>
             <div className="sports-checkbox">
                 <div className="checkbox-item">
                     <input onChange={handleSports} className="checkbox-input" type="checkbox" name="sport" id="running" />
-                    <label htmlFor="running">Running</label>
+                    <label className={"auth-label"} htmlFor="running">Running</label>
                 </div>
                 <div className="checkbox-item">
                     <input onChange={handleSports} className="checkbox-input"  type="checkbox" name="sport" id="trail" />
-                    <label htmlFor="trail">Trail</label>
+                    <label className={"auth-label"} htmlFor="trail">Trail</label>
                 </div>
                 <div className="checkbox-item">
                     <input onChange={handleSports} className="checkbox-input"  type="checkbox" name="sport" id="velo" />
-                    <label htmlFor="cyclisme">Cyclisme</label>
+                    <label className={"auth-label"} htmlFor="cyclisme">Cyclisme</label>
                 </div>
             </div>
 

@@ -1,4 +1,4 @@
-form{
+.auth-form{
     display: flex;
     flex-direction: column;
     width: 800px;
@@ -22,11 +22,11 @@ form{
     margin-top: 10px;
 }
 
-label{
+.auth-label{
     font-size: 1.3rem;
 }
 
-input{
+.auth-input{
     font-size: 1.3rem;
     padding: 5px;
     border-radius: 5px;

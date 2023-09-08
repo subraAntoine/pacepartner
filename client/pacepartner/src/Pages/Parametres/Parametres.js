@@ -247,53 +247,53 @@ export default function Parametres() {
                     <div className="profile-info">
 
                         <div className="profile-info-item">
-                            <label htmlFor="email">Email :</label>
-                            <h4 className={"input-item"}>{user.email}</h4>
+                            <label className={"param-label"} htmlFor="email">Email :</label>
+                            <h4 className={"input-item-text"}>{user.email}</h4>
                         </div>
                         <div className="profile-info-item">
-                            <label htmlFor="pseudo">Pseudo :</label>
-                            <h4 className={"input-item"}>{user.pseudo}</h4>
+                            <label className={"param-label"} htmlFor="pseudo">Pseudo :</label>
+                            <h4 className={"input-item-text"}>{user.pseudo}</h4>
                         </div>
                         <div className="profile-info-item">
-                            <label htmlFor="nom">Nom :</label>
+                            <label className={"param-label"} htmlFor="nom">Nom :</label>
                             <input onChange={handleData} className={"input-item"} type="text" name={"nom"} id={"nom"} defaultValue={user.nom} disabled={!edit}/>
                         </div>
                         <div className="profile-info-item">
-                            <label htmlFor="nom">Prénom :</label>
+                            <label className={"param-label"} htmlFor="nom">Prénom :</label>
                             <input onChange={handleData} className={"input-item"} type="text" name={"prenom"} id={"prenom"} defaultValue={user.prenom} disabled={!edit}/>
                         </div>
                         <div className="profile-info-item">
-                            <label htmlFor="nom">Localisation:</label>
+                            <label className={"param-label"} htmlFor="nom">Localisation:</label>
                             {
-                                edit && <MapBox onSuggestionSelected={handleCityData} disabled={!edit}></MapBox>
+                                edit && <MapBox onSuggestionSelected={handleCityData} type={'place'} disabled={!edit}></MapBox>
                             }
 
-                            <h4 className={"input-item"}>{user.localisation}</h4>
+                            <h4 className={"input-item-text"}>{user.localisation}</h4>
                         </div>
                         <div className="profile-info-item">
-                            <label htmlFor="nom">Date de naissance :</label>
+                            <label className={"param-label"} htmlFor="nom">Date de naissance :</label>
                             <input type="date" defaultValue={user.dateNaissance} name={"dateNaissance"} className={"input-item"} onChange={handleData} disabled={!edit}/>
                         </div>
 
                         <div className="profile-info-item">
-                            <label htmlFor="nom">Description :</label>
+                            <label className={"param-label"} htmlFor="nom">Description :</label>
                             <textarea onChange={handleData} className={"input-item area-input"} name="description" id="description" cols="30" rows="10" defaultValue={user.description} disabled={!edit}></textarea>
                         </div>
 
                         <div className="profile-info-item">
-                            <label htmlFor="nom">Sports :</label>
+                            <label className={"param-label"} htmlFor="nom">Sports :</label>
                             <div className="sports-checkbox" >
                                 <div className="checkbox-item">
                                     <input onClick={handleSportsData}  className="checkbox-input" type="checkbox" name="sport" id="running" value={"running"} defaultChecked={user && user.sports && user.sports.includes("running")} disabled={!edit} />
-                                    <label htmlFor="running">Running</label>
+                                    <label className={"param-label"} htmlFor="running">Running</label>
                                 </div>
                                 <div className="checkbox-item">
                                     <input onClick={handleSportsData}  className="checkbox-input"  type="checkbox" name="sport" id="trail" value={"trail"} defaultChecked={user && user.sports && user.sports.includes("trail")} disabled={!edit}  />
-                                    <label htmlFor="trail">Trail</label>
+                                    <label className={"param-label"} htmlFor="trail">Trail</label>
                                 </div>
                                 <div className="checkbox-item">
                                     <input onClick={handleSportsData}  className="checkbox-input"  type="checkbox" name="sport" id="velo" value={"velo"} defaultChecked={user && user.sports && user.sports.includes("velo")} disabled={!edit} />
-                                    <label htmlFor="cyclisme">Cyclisme</label>
+                                    <label className={"param-label"} htmlFor="cyclisme">Cyclisme</label>
                                 </div>
                             </div>
                         </div>
@@ -309,49 +309,49 @@ export default function Parametres() {
                                     <>
                                         <p className={"indice-title"}>Indices de performances de course à pied et de trail :</p>
                                         <div className="profile-info-item">
-                                            <label htmlFor="record5km">record 5km :</label>
+                                            <label className={"param-label"} htmlFor="record5km">Record 5km :</label>
                                             <input onChange={handleTimeData} className={"input-item"} type="text" name={"record5km"} id={"record5km"} defaultValue={user.record5km} disabled={!edit}/>
                                             {
                                                 !validFormat.record5km && <p className={"format-error-text"}>Le temps doit être au format "HH:MM:SS"</p>
                                             }
                                         </div>
                                         <div className="profile-info-item">
-                                            <label htmlFor="record10km">record 10km :</label>
+                                            <label className={"param-label"} htmlFor="record10km">Record 10km :</label>
                                             <input onChange={handleTimeData} className={"input-item"} type="text" name={"record10km"} id={"record10km"} defaultValue={user.record10km} disabled={!edit}/>
                                             {
                                                 !validFormat.record10km && <p className={"format-error-text"}>Le temps doit être au format "HH:MM:SS"</p>
                                             }
                                         </div>
                                         <div className="profile-info-item">
-                                            <label htmlFor="recordSemi">record semi-marathon :</label>
+                                            <label className={"param-label"} htmlFor="recordSemi">Record semi-marathon :</label>
                                             <input onChange={handleTimeData} className={"input-item"} type="text" name={"recordSemi"} id={"recordSemi"} defaultValue={user.recordSemi} disabled={!edit}/>
                                             {
                                                 !validFormat.recordSemi && <p className={"format-error-text"}>Le temps doit être au format "HH:MM:SS"</p>
                                             }
                                         </div>
                                         <div className="profile-info-item">
-                                            <label htmlFor="recordMarathon">record marathon :</label>
+                                            <label className={"param-label"} htmlFor="recordMarathon">Record marathon :</label>
                                             <input onChange={handleTimeData} className={"input-item"} type="text" name={"recordMarathon"} id={"recordMarathon"} defaultValue={user.recordMarathon} disabled={!edit}/>
                                             {
                                                 !validFormat.recordMarathon && <p className={"format-error-text"}>Le temps doit être au format "HH:MM:SS"</p>
                                             }
                                         </div>
                                         <div className="profile-info-item">
-                                            <label htmlFor="VMA">VMA :</label>
+                                            <label className={"param-label"} htmlFor="VMA">VMA :</label>
                                             <input onChange={handleVMAData} className={"input-item"} type="number" name={"VMA"} id={"VMA"} defaultValue={user.VMA} disabled={!edit}/>
                                             {
                                                 !validFormat.VMA && <p className={"format-error-text"}>La VMA doit être comprise entre 8 et 24km/h.</p>
                                             }
                                         </div>
                                         <div className="profile-info-item">
-                                            <label htmlFor="RunVolumeHebdo">Volume hebdomadaire de course à pied (km) :</label>
+                                            <label className={"param-label"} htmlFor="RunVolumeHebdo">Volume hebdomadaire de course à pied (km) :</label>
                                             <input onChange={handleVolumeData} className={"input-item"} type="number" name={"RunVolumeHebdo"} id={"RunVolumeHebdo"} defaultValue={user.RunVolumeHebdo} disabled={!edit}/>
                                             {
                                                 !validFormat.RunVolumeHebdo && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 400.</p>
                                             }
                                         </div>
                                         <div className="profile-info-item">
-                                            <label htmlFor="longestRun">Plus longue sortie course à pied (km) :</label>
+                                            <label className={"param-label"} htmlFor="longestRun">Plus longue sortie course à pied (km) :</label>
                                             <input onChange={handleLongestRunData} className={"input-item"} type="number" name={"longestRun"} id={"longestRun"} defaultValue={user.longestRun} disabled={!edit}/>
                                             {
                                                 !validFormat.longestRun && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 500.</p>
@@ -365,21 +365,21 @@ export default function Parametres() {
                                     <>
                                         <p className={"indice-title"}>Indices de performances de cyclisme :</p>
                                         <div className="profile-info-item">
-                                            <label htmlFor="FTP">FTP (W) :</label>
+                                            <label className={"param-label"} htmlFor="FTP">FTP (W) :</label>
                                             <input onChange={handleFTPData} className={"input-item"} type="number" name={"FTP"} id={"FTP"} defaultValue={user.FTP} disabled={!edit}/>
                                             {
                                                 !validFormat.FTP && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 500.</p>
                                             }
                                         </div>
                                         <div className="profile-info-item">
-                                            <label htmlFor="longestBike">Plus longue sortie cyclisme (km) :</label>
+                                            <label className={"param-label"} htmlFor="longestBike">Plus longue sortie cyclisme (km) :</label>
                                             <input onChange={handleLongestBikeData} className={"input-item"} type="number" name={"longestBike"} id={"longestBike"} defaultValue={user.longestBike} disabled={!edit}/>
                                             {
                                                 !validFormat.longestBike && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 1000.</p>
                                             }
                                         </div>
                                         <div className="profile-info-item">
-                                            <label htmlFor="BikeVolumeHebdo">Volume hebdomadaire de cyclisme (km) :</label>
+                                            <label className={"param-label"} htmlFor="BikeVolumeHebdo">Volume hebdomadaire de cyclisme (km) :</label>
                                             <input onChange={handleBikeVolumeData} className={"input-item"} type="number" name={"BikeVolumeHebdo"} id={"BikeVolumeHebdo"} defaultValue={user.BikeVolumeHebdo} disabled={!edit}/>
                                             {
                                                 !validFormat.BikeVolumeHebdo && <p className={"format-error-text"}>Cette valeur doit être un nombre compris entre 0 et 3000.</p>

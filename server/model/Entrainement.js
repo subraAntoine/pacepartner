@@ -14,7 +14,7 @@ const EntrainementSchema = new mongoose.Schema({
     isCancelled: {type: Boolean, default: false},
     isFinished: {type: Boolean, default: false},
     isFull: {type: Boolean, default: false},
-    sportEntainement: {type: String, required: true},
+    sportEntrainement: {type: String, required: true},
     distanceEntrainement: {type: Number, required: true},
     dureeEntrainement: {type: Number, required: true},
     deniveleEntrainement: {type: Number, required: true},

@@ -109,6 +109,20 @@
     font-weight: 600;
     width: 80%;
     resize: none;
+    border-radius: 5px ;
+    border: 1px solid #969696;
+}
+
+.input-item-text{
+
+    background-color: #ffffff;
+    padding: 10px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    width: 80%;
+    resize: none;
+    border-radius: 5px ;
+
 }
 
 .circle-top-right{
@@ -146,4 +160,11 @@
     margin-top: 20px;
     margin-bottom: 10px;
 }
+
+.param-label{
+    font-size: 1.25rem;
+    font-weight: 400;
+
+}
+
 

@@ -40,10 +40,10 @@ export default function Login() {
     return (
         <form className="auth-form" onSubmit={handleSubmit}>
             <h1 className={"form-title"}>Connexion</h1>
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" onChange={handleEmail}/>
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" onChange={handlePassword} />
+            <label className={"auth-label"} htmlFor="email">Email</label>
+            <input className={"auth-input"} type="email" name="email" id="email" onChange={handleEmail}/>
+            <label className={"auth-label"} htmlFor="password">Password</label>
+            <input className={"auth-input"} type="password" name="password" id="password" onChange={handlePassword} />
             <Button className={"auth-btn"} text={"Se connecter"}></Button>
             <p className="error-msg">{error}</p>
         </form>
