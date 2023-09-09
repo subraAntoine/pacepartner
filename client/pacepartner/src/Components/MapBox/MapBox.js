@@ -13,7 +13,7 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoiYW50b2luZXN1YnJhIiwiYSI6ImNsbDB5eWg4aTBrZGozanF
 mapboxgl.accessToken = MAPBOX_TOKEN;
 const geocodingClient = MapboxGeocoding({ accessToken: mapboxgl.accessToken });
 
-function MapBox({onSuggestionSelected, disabled, defaultLoc, type}) {
+function MapBox({onSuggestionSelected, disabled, defaultLoc, type, mapPlaceholder}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
 
@@ -47,7 +47,7 @@ function MapBox({onSuggestionSelected, disabled, defaultLoc, type}) {
         <div>
             <input
                 type="text"
-                placeholder="Rechercher une ville"
+                placeholder={mapPlaceholder}
                 value={searchTerm}
                 onChange={(e) => handleInputChange(e.target.value)}
                 disabled={disabled}

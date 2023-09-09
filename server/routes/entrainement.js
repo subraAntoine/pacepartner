@@ -4,10 +4,11 @@ const authToken = require('../middlewares/authToken');
 
 const router = express.Router();
 
-router.post('/createEntrainement', authToken, async (req, res) => {
+router.post('/create', authToken, async (req, res) => {
     try {
         const data = req.body;
         const newEntrainement = new EntrainementModel(data);
+        newEntrainement.organisateur = req.userId;
         await newEntrainement.save();
         res.status(200).json({message: "Entrainement créé avec succès !"});
     } catch (error) {

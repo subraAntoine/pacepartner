@@ -10,6 +10,7 @@ import handleUpdate from "../../Api/User/Update";
 import MapBox from "../../Components/MapBox/MapBox";
 import Button from "../../Components/Button/Button";
 
+
 export default function Parametres() {
 
     const {user, setUser} = useUser();
@@ -92,6 +93,7 @@ export default function Parametres() {
         fetchData();
 
     }, [updateDataTrigger]);
+
 
     const handleData = (e) => {
         setData({...data, [e.target.name]: e.target.value});
@@ -265,7 +267,7 @@ export default function Parametres() {
                         <div className="profile-info-item">
                             <label className={"param-label"} htmlFor="nom">Localisation:</label>
                             {
-                                edit && <MapBox onSuggestionSelected={handleCityData} type={'place'} disabled={!edit}></MapBox>
+                                edit && <MapBox mapPlaceholder={"Rechercher une ville"} onSuggestionSelected={handleCityData} type={'place'} disabled={!edit}></MapBox>
                             }
 
                             <h4 className={"input-item-text"}>{user.localisation}</h4>

@@ -17,7 +17,6 @@ const EntrainementSchema = new mongoose.Schema({
     sportEntrainement: {type: String, required: true},
     distanceEntrainement: {type: Number, required: true},
     dureeEntrainement: {type: Number, required: true},
-    deniveleEntrainement: {type: Number, required: true},
 });
 
 const EntrainementModel = mongoose.model('entrainements', EntrainementSchema);
