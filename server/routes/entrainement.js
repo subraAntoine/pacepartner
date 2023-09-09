@@ -16,4 +16,13 @@ router.post('/create', authToken, async (req, res) => {
     }
 });
 
+router.get('/all', authToken, async (req, res) => {
+    try {
+        const entrainements = await EntrainementModel.find();
+        res.status(200).json({entrainements: entrainements});
+    } catch (error) {
+        res.status(500).json({message: "Erreur lors de la récupération des entrainements", error: error});
+    }
+});
+
 module.exports = {entrainementRouter: router};

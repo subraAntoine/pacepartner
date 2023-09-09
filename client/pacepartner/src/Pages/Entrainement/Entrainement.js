@@ -7,6 +7,8 @@ import CreationEntrainement from "../../Components/CreationEntrainement/Creation
 import getUserInfo from "../../Api/User/UserInfo";
 import {useUser} from "../../Context/userContext";
 import {useNavigate} from "react-router-dom";
+import GetAllEntrainement from "../../Api/Entrainements/AllEntrainement";
+import CardEntrainement from "../../Components/CardEntrainement/CardEntrainement";
 
 export default function Entrainement () {
 
@@ -14,6 +16,7 @@ export default function Entrainement () {
     const [displayCreaEntrainement, setDisplayCreaEntrainement] = useState(false);
     const {user, setUser} = useUser();
     const [updateDataTrigger, setUpdateDataTrigger] = useState(false);
+    const [entrainementList, setEntrainementList] = useState([]);
 
     const navigate = useNavigate();
 
@@ -44,7 +47,21 @@ export default function Entrainement () {
                 isCancelled = true;
             }
         }
+
+        const fetchEntrainementList = async () => {
+            try{
+                setEntrainementList(await GetAllEntrainement());
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
         fetchData();
+
+        fetchEntrainementList();
+        console.log(entrainementList);
+
 
     }, [updateDataTrigger]);
 
@@ -73,6 +90,14 @@ export default function Entrainement () {
                         isNewEntrainementHovered ? <MdAddCircle onClick={toggleCreaEntrainement} onMouseLeave={handleHoverIcon} style={newEntrainementIconStyle}/> : <MdAddCircleOutline onMouseEnter={handleHoverIcon} style={newEntrainementIconStyle}/>
                     }
                 </div>
+                <div className="entrainement-list-wrapper">
+                    {
+                        entrainementList && entrainementList.map((entrainement, index) => {
+                            return <CardEntrainement key={index} entrainement={entrainement}></CardEntrainement>
+                        })
+                    }
+                </div>
+
             </div>
 
         </>
