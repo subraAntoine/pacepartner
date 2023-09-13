@@ -14,8 +14,6 @@ const UserSchema = new mongoose.Schema({
     isSubscribed: {type: Boolean, default: false},
     subscriptionPlan: {type: String},
     subscriptionId: {type: String},
-    followings: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
-    followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
     notifications: [{type: mongoose.Schema.Types.ObjectId, ref: 'notifications'}],
     record5km: {type: String},
     record10km: {type: String},
@@ -28,6 +26,8 @@ const UserSchema = new mongoose.Schema({
     RunVolumeHebdo: {type: Number},
     BikeVolumeHebdo: {type: Number},
     NbEntrainementParticipe: {type: Number, default: 0},
+    friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
+    friendRequests: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
 });
 
 const UserModel = mongoose.model('users', UserSchema);

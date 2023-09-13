@@ -4,7 +4,7 @@ const GetAllEntrainement = async () => {
     try{
         const response = await axios.get("http://localhost:3002/entrainements/all", {withCredentials: true});
 
-        return response.data.entrainements;
+        return response;
     } catch (err) {
         return err;
     }

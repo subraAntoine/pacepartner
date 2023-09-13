@@ -50,7 +50,9 @@ export default function Entrainement () {
 
         const fetchEntrainementList = async () => {
             try{
-                setEntrainementList(await GetAllEntrainement());
+                const entrainementTemp = await GetAllEntrainement();
+                setEntrainementList(entrainementTemp.data.entrainements);
+                console.log(entrainementList);
 
             } catch (error) {
                 console.log(error);
@@ -60,12 +62,12 @@ export default function Entrainement () {
         fetchData();
 
         fetchEntrainementList();
-        console.log(entrainementList);
+
 
 
     }, [updateDataTrigger]);
 
-    const newEntrainementIconStyle = {color: "black", fontSize: "4rem", position: "absolute", bottom: "5%", right: "3%", cursor: "pointer", transition: "all 0.3s ease-in-out"}
+    const newEntrainementIconStyle = {color: "black", fontSize: "4rem", position: "fixed", bottom: "5%", right: "3%", cursor: "pointer", transition: "all 0.3s ease-in-out", zIndex: "10"}
 
 
     const handleHoverIcon = () => {

@@ -1,0 +1,57 @@
+.entrainement-card-header-seuil{
+    color: orange;
+}
+
+
+
+.map-container {
+    height: 400px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 10px;
+    font-weight: 400;
+}
+
+.mapboxgl-ctrl-attrib-inner {
+    display: none;
+}
+
+.card-map-container{
+    width: 600px;
+
+
+}
+
+.entrainement-card-wrap{
+
+    width: 90%;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 40px 0;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+}
+
+.entrainement-card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.entrainement-card-body{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.card-depart-adresse{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.card-text-span{
+    font-weight: 400;
+    text-decoration: none;
+}
+

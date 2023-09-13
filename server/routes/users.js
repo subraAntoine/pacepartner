@@ -120,16 +120,25 @@ router.post('/user', authToken, async (req, res) => {
             res.status(404).json({ message: "Utilisateur non trouvé" });
 
         } else {
-            const photo = 'http://localhost:3002/images/' + user.photo;
-            const dateNaissance = user.dateNaissance.toISOString().split('T')[0];
             const userWithoutPassword = {...user._doc};
             delete userWithoutPassword.password;
-            userWithoutPassword.photo = photo;
-            userWithoutPassword.dateNaissance = dateNaissance;
+            if(user.photo){
+                const photo = 'http://localhost:3002/images/' + user.photo;
+                userWithoutPassword.photo = photo;
+            }
+            if (user.dateNaissance){
+                const dateNaissance = user.dateNaissance.toISOString().split('T')[0];
+                userWithoutPassword.dateNaissance = dateNaissance;
+            }
+
+
+
+
+
             res.status(200).json({ user: userWithoutPassword });
         }
     } catch (err) {
-        res.status(500).json({ message: "Une erreur s'est produite lors de la récupération des informations utilisateur" });
+        res.status(500).json({ message: "Une erreur s'est produite lors de la récupération des informations utilisateurrr" });
     }
 })
 

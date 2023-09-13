@@ -39,7 +39,7 @@ export default function LeftMenu () {
 
                 </Link>
                 <Link to={"/profile"} className="profile-menu-link">
-                    <img src={user.photo} alt="Avatar" className={"user-avatar"}/>
+                    <img src={user.photo && user.photo} alt="Avatar" className={"user-avatar"}/>
                     <h3 className="user-name">{user.pseudo}</h3>
                     <MdArrowForwardIos style={style}/>
                 </Link>
