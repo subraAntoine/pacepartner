@@ -27,13 +27,31 @@ router.get('/all', authToken, async (req, res) => {
     }
 });
 
-router.get('/organisateurName', authToken, async (req, res) => {
+router.get('/userPseudo/:pseudoUserID', authToken, async (req, res) => {
    try{
-       const organisateurName = await UserModel.findById(req.userId, {pseudo: 1, _id: 0});
-         res.status(200).json({organisateurName: organisateurName});
+       const userID = req.params.pseudoUserID;
+         const userPseudo = await UserModel.findById(userID, {pseudo: 1, _id: 0});
+         res.status(200).json({userPseudo: userPseudo});
    } catch (error) {
        res.status(500).json({message: "Erreur lors de la récupération du nom de l'organisateur", error: error});
    }
+});
+
+router.post('/joinEntrainement/:entrainementID', authToken, async (req, res) => {
+    try{
+        const entrainementID = req.params.entrainementID;
+        const userID = req.userId;
+        const entrainement = await EntrainementModel.findById(entrainementID);
+        if (entrainement.participants.length < entrainement.nbMaxParticipants) {
+            entrainement.participants.push(userID);
+            await entrainement.save();
+            res.status(200).json({message: "Vous avez rejoint l'entrainement !"});
+        } else {
+            res.status(500).json({message: "L'entrainement est complet !"});
+        }
+    } catch (error) {
+        res.status(500).json({message: "Erreur lors de l'ajout de l'utilisateur à l'entrainement", error: error});
+    }
 });
 
 

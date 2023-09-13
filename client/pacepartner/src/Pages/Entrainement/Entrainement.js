@@ -35,6 +35,7 @@ export default function Entrainement () {
                 if(!isCancelled) {
                     setUser(response.user);
 
+
                 }
 
             } catch (error) {
@@ -52,7 +53,7 @@ export default function Entrainement () {
             try{
                 const entrainementTemp = await GetAllEntrainement();
                 setEntrainementList(entrainementTemp.data.entrainements);
-                console.log(entrainementList);
+
 
             } catch (error) {
                 console.log(error);
@@ -84,7 +85,7 @@ export default function Entrainement () {
             <div className="entrainement-page-content-wrapper">
                 <h1> Parcourir les entraînements PacePartner </h1>
                 {
-                    displayCreaEntrainement && <CreationEntrainement toggleCreaEntrainement={toggleCreaEntrainement}></CreationEntrainement>
+                    displayCreaEntrainement && <CreationEntrainement updateDataTrigger={setUpdateDataTrigger} toggleCreaEntrainement={toggleCreaEntrainement}></CreationEntrainement>
                 }
 
                 <div className="new-entrainement-wrapper">
@@ -95,7 +96,7 @@ export default function Entrainement () {
                 <div className="entrainement-list-wrapper">
                     {
                         entrainementList && entrainementList.map((entrainement, index) => {
-                            return <CardEntrainement key={index} entrainement={entrainement}></CardEntrainement>
+                            return <CardEntrainement updateDataTrigger={setUpdateDataTrigger} key={index} entrainement={entrainement}></CardEntrainement>
                         })
                     }
                 </div>

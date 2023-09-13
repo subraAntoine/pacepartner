@@ -6,7 +6,7 @@ import Button from "../Button/Button";
 import axios from "axios";
 import getUserInfo from "../../Api/User/UserInfo";
 import {useUser} from "../../Context/userContext";
-export default function CreationEntrainement ({toggleCreaEntrainement}) {
+export default function CreationEntrainement ({toggleCreaEntrainement, updateDataTrigger}) {
 
     const [dataEntrainement, setDataEntrainement] = useState({});
     const [alertFormat, setAlertFormat] = useState({
@@ -47,6 +47,7 @@ export default function CreationEntrainement ({toggleCreaEntrainement}) {
         try {
             axios.post('http://localhost:3002/entrainements/create', dataEntrainement, {withCredentials: true});
             setError(false)
+            updateDataTrigger(true)
             toggleCreaEntrainement();
         } catch (error) {
             console.log(error);
