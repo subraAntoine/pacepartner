@@ -1,5 +1,17 @@
 const mongoose = require('mongoose');
 
+const pointSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ['Point'],
+        required: true
+    },
+    coordinates: {
+        type: [Number],
+        required: true
+    }
+});
+
 const EntrainementSchema = new mongoose.Schema({
     dateEntrainement: {type: Date, required: true},
     heureEntrainement: {type: String, required: true},
@@ -17,6 +29,7 @@ const EntrainementSchema = new mongoose.Schema({
     sportEntrainement: {type: String, required: true},
     distanceEntrainement: {type: Number, required: true},
     dureeEntrainement: {type: Number, required: true},
+    gpsLocation: pointSchema
 });
 
 const EntrainementModel = mongoose.model('entrainements', EntrainementSchema);

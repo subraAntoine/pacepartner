@@ -5,6 +5,7 @@ import MapBox from "../MapBox/MapBox";
 import Button from "../Button/Button";
 import axios from "axios";
 import getUserInfo from "../../Api/User/UserInfo";
+import getGPSCoordinates from "../../Api/Entrainements/GetGPSCoordinates";
 import {useUser} from "../../Context/userContext";
 export default function CreationEntrainement ({toggleCreaEntrainement, updateDataTrigger}) {
 
@@ -34,12 +35,20 @@ export default function CreationEntrainement ({toggleCreaEntrainement, updateDat
             setAlertFormat({...alertFormat, nbMaxParticipants: false});
         }
         setDataEntrainement({...dataEntrainement, [e.target.name]: e.target.value});
-        console.log(dataEntrainement);
+
     }
 
-    const handleAdresseData = (adresse) => {
+    const handleAdresseData = async (adresse) => {
+        try {
+           const gpsCode = await getGPSCoordinates(adresse);
+           setDataEntrainement({...dataEntrainement, gpsLocation: gpsCode})
+           console.log(gpsCode);
+        } catch (error) {
+            console.log(error);
+        }
+
         setDataEntrainement({...dataEntrainement, lieuEntrainement: adresse});
-        console.log(dataEntrainement);
+
     }
 
     const handleCreateEntrainement = async (e) => {
