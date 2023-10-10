@@ -1,5 +1,29 @@
 .entrainement-card-header-seuil{
     color: orange;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+.entrainement-card-header-endurance{
+    color: #49b6d5;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+.entrainement-card-header-vma{
+    color: #e74c3c;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+.entrainement-card-header-long-run{
+    color: #2ecc71;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+.organisateur-name-entrainement{
+    text-decoration: underline;
 }
 
 
@@ -37,6 +61,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+
 }
 
 .entrainement-card-body{
@@ -55,3 +80,22 @@
     text-decoration: none;
 }
 
+.card-participants-info{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+.organisateur-pic-entrainement{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.organisateur-info-entrainement{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

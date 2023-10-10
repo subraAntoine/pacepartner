@@ -40,16 +40,25 @@ export default function CreationEntrainement ({toggleCreaEntrainement, updateDat
 
     const handleAdresseData = async (adresse) => {
         try {
-           const gpsCode = await getGPSCoordinates(adresse);
-           setDataEntrainement({...dataEntrainement, gpsLocation: gpsCode})
-           console.log(gpsCode);
+            var gpsCode = await getGPSCoordinates(adresse);
+            var gpsPoint = {
+                type: 'Point',
+                coordinates: gpsCode
+            };
+
+            // Mettez à jour l'état après avoir obtenu les coordonnées GPS
+            setDataEntrainement({
+                ...dataEntrainement,
+                lieuEntrainement: adresse,
+                gpsLocation: gpsPoint
+            });
         } catch (error) {
             console.log(error);
         }
 
-        setDataEntrainement({...dataEntrainement, lieuEntrainement: adresse});
-
+        console.log(dataEntrainement);
     }
+
 
     const handleCreateEntrainement = async (e) => {
         e.preventDefault();
@@ -58,6 +67,7 @@ export default function CreationEntrainement ({toggleCreaEntrainement, updateDat
             setError(false)
             updateDataTrigger(true)
             toggleCreaEntrainement();
+
         } catch (error) {
             console.log(error);
             setError(true)

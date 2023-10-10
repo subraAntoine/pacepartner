@@ -4,6 +4,7 @@ import MapComponent from "../Map/Map";
 import Button from "../Button/Button";
 import {useUser} from "../../Context/userContext";
 import joinEntrainement from "../../Api/Entrainements/JoinEntrainement";
+import getProfilePic from "../../Api/User/GetProfilePic";
 
 import axios from "axios";
 import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
@@ -13,6 +14,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
     const [date, setDate] = useState(null);
     const [organisateurName, setOrganisateurName] = useState(null);
+    const [organisateurPic, setOrganisateurPic] = useState(null);
     const {user, setUser} = useUser();
     const [participantsName, setParticipantsName] = useState(null);
 
@@ -38,7 +40,10 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
             const getOrganisateurPseudo = async () => {
                 try {
                     const nameTemp = await GetUserPseudo(entrainement.organisateur);
+                    const picTemp = await getProfilePic(entrainement.organisateur);
                     setOrganisateurName(nameTemp);
+                    setOrganisateurPic(picTemp.data.profilePic);
+
                 } catch (error) {
                     console.log(error);
                 }
@@ -93,7 +98,11 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
             </div>
             <div className="entrainement-card-body" >
                 <div className="card-participants-info">
-                    <h3>Organisateur : {organisateurName}</h3>
+                    <div className="organisateur-info-entrainement">
+                        <h3 >Organisateur : <span className={"organisateur-name-entrainement"}>{organisateurName}</span> </h3>
+                        {organisateurPic && <img src={organisateurPic} className={"organisateur-pic-entrainement"} alt=""/>}
+                    </div>
+
                     <h3>Nombre de participants : <span className={"card-text-span"}>{entrainement.participants.length} / {entrainement.nbMaxParticipants}</span></h3>
                     <h3>Participants : <span className={"card-text-span"}>{
                         participantsName && participantsName.map((participant, index) => {
@@ -115,7 +124,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
                 </div>
                 <div className="card-map-container">
-                    <MapComponent adresse={entrainement.lieuEntrainement}></MapComponent>
+                    <MapComponent coordinates={entrainement.gpsLocation.coordinates}></MapComponent>
                     <h3 className={"card-depart-adresse"}>Point de départ : <span className={"card-text-span"}>{entrainement.lieuEntrainement}</span></h3>
                 </div>
 
