@@ -16,7 +16,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
     const [organisateurName, setOrganisateurName] = useState(null);
     const [organisateurPic, setOrganisateurPic] = useState(null);
     const {user, setUser} = useUser();
-    const [participantsName, setParticipantsName] = useState(null);
+    const [participantsInfo, setParticipantsInfo] = useState(null);
 
     const handleJoinEntrainement = async () => {
         try{
@@ -53,9 +53,10 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                 try {
                     const participantsTemp = await Promise.all(entrainement.participants.map(async (participant) => {
                         const participantName = await GetUserPseudo(participant);
-                        return participantName;
+                        const participantPic = await getProfilePic(participant);
+                        return {name: participantName, pic: participantPic.data.profilePic};
                     }));
-                    setParticipantsName(participantsTemp);
+                    setParticipantsInfo(participantsTemp);
                 } catch (error) {
                     console.log(error);
                 }
@@ -99,16 +100,26 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
             <div className="entrainement-card-body" >
                 <div className="card-participants-info">
                     <div className="organisateur-info-entrainement">
-                        <h3 >Organisateur : <span className={"organisateur-name-entrainement"}>{organisateurName}</span> </h3>
-                        {organisateurPic && <img src={organisateurPic} className={"organisateur-pic-entrainement"} alt=""/>}
+                        <h3>Organisateur : </h3>
+                        <div className="organisateur-info-square">
+                            <h3 ><span className={"organisateur-name-entrainement"}>{organisateurName}</span> </h3>
+                            {organisateurPic && <img src={organisateurPic} className={"organisateur-pic-entrainement"} alt=""/>}
+                        </div>
+
                     </div>
 
                     <h3>Nombre de participants : <span className={"card-text-span"}>{entrainement.participants.length} / {entrainement.nbMaxParticipants}</span></h3>
-                    <h3>Participants : <span className={"card-text-span"}>{
-                        participantsName && participantsName.map((participant, index) => {
-                            return <span key={index}>{participant} / </span>
+                    {entrainement.participants.length > 0 && <h3 className={"participants-list-container"}>Participants : <span className={"participants-list-span"}>{
+                        participantsInfo && participantsInfo.map((participant, index) => {
+                            return(
+                                <div className={"participants-entrainement-square"}>
+                                    <span key={index}>{participant.name}</span>
+                                    <img className={"participants-entrainement-pic"} src={participant.pic} alt=""/>
+                                </div>
+
+                            )
                         })
-                    }</span></h3>
+                    }</span></h3>}
                     <h3>Distance estimée : <span className={"card-text-span"}>{entrainement.distanceEntrainement} km</span></h3>
                     <h3>Durée estimée : <span className={"card-text-span"}>{entrainement.dureeEntrainement} min</span> </h3>
                     <h3>Description :</h3>
@@ -117,7 +128,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                     </p>
 
                     {
-                        (user._id !== entrainement.organisateur) && <Button onClick={() => handleJoinEntrainement(entrainement)} text={"Rejoindre l'entrainement"}></Button>
+                        (user._id !== entrainement.organisateur) && <Button className={"join-entrainement-btn"} onClick={() => handleJoinEntrainement(entrainement)} text={"Rejoindre l'entrainement"}></Button>
                     }
 
 
