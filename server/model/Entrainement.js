@@ -32,6 +32,16 @@ const EntrainementSchema = new mongoose.Schema({
     gpsLocation: pointSchema
 });
 
+
+
 const EntrainementModel = mongoose.model('entrainements', EntrainementSchema);
+
+EntrainementModel.collection.createIndex({ "gpsLocation.coordinates": "2dsphere" }, function(err, result) {
+    if (err) {
+        console.error("Erreur lors de la création de l'index géospatial : ", err);
+    } else {
+        console.log("Index géospatial créé avec succès.");
+    }
+});
 
 module.exports = {EntrainementModel};

@@ -50,6 +50,44 @@ router.get('/all', authToken, async (req, res) => {
     }
 });
 
+router.get('/allMatch', authToken, async (req, res) => {
+    try {
+        const userLat = 45.597108;
+        const userLong = 5.27212;
+
+        const Lat = parseFloat(userLat);
+        const Long = parseFloat(userLong);
+
+
+        const maxDistance = 5000;
+        const user = await UserModel.findById(req.userId);
+
+        if(!user){
+            res.status(500).json({message: "Aucun utilisateur trouvé"});
+        }
+
+        const entrainements = await EntrainementModel.aggregate([{
+            $geoNear: {
+                near: {
+                    type: "Point",
+                    coordinates: [Long, Lat]
+                },
+                distanceField: "distance",
+                maxDistance: maxDistance,
+                spherical: true
+            }
+        }]);
+
+        console.log(entrainements);
+
+            res.status(200).json({entrainements: entrainements});
+
+
+    } catch (error) {
+        res.status(500).json({message: "Erreur lors de la récupération des entrainements", error: error});
+    }
+});
+
 router.get('/userPseudo/:pseudoUserID', authToken, async (req, res) => {
    try{
        const userID = req.params.pseudoUserID;

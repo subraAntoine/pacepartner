@@ -9,6 +9,7 @@ import {useUser} from "../../Context/userContext";
 import {useNavigate} from "react-router-dom";
 import GetAllEntrainement from "../../Api/Entrainements/AllEntrainement";
 import CardEntrainement from "../../Components/CardEntrainement/CardEntrainement";
+import GetGPSCoordinates from "../../Api/Entrainements/GetGPSCoordinates";
 
 export default function Entrainement () {
 
@@ -17,6 +18,7 @@ export default function Entrainement () {
     const {user, setUser} = useUser();
     const [updateDataTrigger, setUpdateDataTrigger] = useState(false);
     const [entrainementList, setEntrainementList] = useState([]);
+
 
     const navigate = useNavigate();
 
@@ -51,8 +53,12 @@ export default function Entrainement () {
 
         const fetchEntrainementList = async () => {
             try{
-                const entrainementTemp = await GetAllEntrainement();
-                setEntrainementList(entrainementTemp.data.entrainements);
+                const userPosition = await GetGPSCoordinates(user.localisation);
+
+                if (userPosition) {
+                    const entrainementTemp = await GetAllEntrainement(userPosition[0], userPosition[1]);
+                    setEntrainementList(entrainementTemp.data.entrainements);
+                }
 
 
             } catch (error) {
