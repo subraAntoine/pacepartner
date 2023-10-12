@@ -17,6 +17,29 @@ router.post('/create', authToken, async (req, res) => {
     }
 });
 
+router.post('/delete/:entrainementID', authToken, async (req, res) => {
+    try{
+        const idEntrainement = req.params.entrainementID;
+        const entrainement = await EntrainementModel.findById(idEntrainement);
+        if(!entrainement){
+            res.status(500).json({message: "Aucun entrainement trouvé"});
+        }
+        if(entrainement.organisateur.toString() !== req.userId){
+            res.status(500).json({message: "Vous n'êtes pas l'organisateur de cet entrainement"});
+        }else{
+            const deletedEntrainement = await EntrainementModel.findByIdAndDelete(idEntrainement);
+            if(!deletedEntrainement){
+                res.status(500).json({message: "Erreur lors de la suppression de l'entrainement"});
+            }
+
+            res.status(200).json({message: "Entrainement supprimé avec succès !"});
+        }
+
+    } catch (err){
+        res.status(500).json({message: "Erreur lors de la suppression de l'entrainement", error: err});
+    }
+});
+
 router.get('/all', authToken, async (req, res) => {
     try {
         const entrainements = await EntrainementModel.find();

@@ -6,9 +6,12 @@ import {useUser} from "../../Context/userContext";
 import joinEntrainement from "../../Api/Entrainements/JoinEntrainement";
 import getProfilePic from "../../Api/User/GetProfilePic";
 import Modal from "../Modal/Modal";
+import DeleteEntrainement from "../../Api/Entrainements/DeleteEntrainement";
+import {MdDelete} from "react-icons/md";
 
 import axios from "axios";
 import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
+import deleteEntrainement from "../../Api/Entrainements/DeleteEntrainement";
 
 
 export default function CardEntrainement({entrainement, updateDataTrigger}) {
@@ -19,6 +22,10 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
     const {user, setUser} = useUser();
     const [participantsInfo, setParticipantsInfo] = useState(null);
     const [modalTrigger, setModalTrigger] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
+
+    const style = {zIndex:"3", color: "black", fontSize: "2rem", position: "absolute", bottom: "0", left: "0", margin: "0.8rem", cursor: "pointer"}
+
 
     const handleJoinEntrainement = async () => {
         try{
@@ -73,6 +80,17 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
     }, [entrainement])
 
 
+    const handleDeleteEntrainement = async () => {
+
+        try{
+            const response = await deleteEntrainement(entrainement._id);
+            updateDataTrigger(true);
+            console.log(response);
+        } catch (err){
+            console.log(err);
+        }
+
+    }
 
 
 
@@ -137,6 +155,14 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
                     {
                         modalTrigger && <Modal modalTrigger={modalTrigger} setModalTrigger={setModalTrigger} textContent={"Etes vous sur de vouloir rejoindre cet entrainement ?"} modalFunc={handleJoinEntrainement}></Modal>
+                    }
+
+                    {
+                        user._id === entrainement.organisateur && <MdDelete onClick={() => setDeleteModal(!deleteModal)} style={style}></MdDelete>
+                    }
+
+                    {
+                        deleteModal && <Modal modalTrigger={deleteModal} setModalTrigger={setDeleteModal} textContent={"Etes vous sur de vouloir supprimer cet entrainement ?"} modalFunc={handleDeleteEntrainement}></Modal>
                     }
 
 
