@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import {useUser} from "../../Context/userContext";
 import joinEntrainement from "../../Api/Entrainements/JoinEntrainement";
 import getProfilePic from "../../Api/User/GetProfilePic";
+import Modal from "../Modal/Modal";
 
 import axios from "axios";
 import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
@@ -17,6 +18,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
     const [organisateurPic, setOrganisateurPic] = useState(null);
     const {user, setUser} = useUser();
     const [participantsInfo, setParticipantsInfo] = useState(null);
+    const [modalTrigger, setModalTrigger] = useState(false);
 
     const handleJoinEntrainement = async () => {
         try{
@@ -74,6 +76,8 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
 
 
+
+
     return (
         <div className="entrainement-card-wrap">
             <div className="entrainement-card-header">
@@ -122,13 +126,17 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                     }</span></h3>}
                     <h3>Distance estimée : <span className={"card-text-span"}>{entrainement.distanceEntrainement} km</span></h3>
                     <h3>Durée estimée : <span className={"card-text-span"}>{entrainement.dureeEntrainement} min</span> </h3>
-                    <h3>Description :</h3>
+                    <h3>Description de l'entrainement :</h3>
                     <p className={"entrainement-card-desc"}>
                         {entrainement.descriptionEntrainement}
                     </p>
 
                     {
-                        (user._id !== entrainement.organisateur) && <Button className={"join-entrainement-btn"} onClick={() => handleJoinEntrainement(entrainement)} text={"Rejoindre l'entrainement"}></Button>
+                        ((user._id !== entrainement.organisateur) && !entrainement.participants.some(participant => participant === user._id)) && entrainement.participants.length < entrainement.nbMaxParticipants  && <Button className={"join-entrainement-btn"} onClick={() => setModalTrigger(!modalTrigger)} text={"Rejoindre l'entrainement"}></Button>
+                    }
+
+                    {
+                        modalTrigger && <Modal modalTrigger={modalTrigger} setModalTrigger={setModalTrigger} textContent={"Etes vous sur de vouloir rejoindre cet entrainement ?"} modalFunc={handleJoinEntrainement}></Modal>
                     }
 
 

@@ -176,7 +176,6 @@ router.get('/userProfilePic/:ID', authToken, async (req, res) => {
     try {
         const userID = req.params.ID;
         const profilePic = await UserModel.findById(userID, 'photo');
-        console.log(profilePic);
         if (!profilePic) {
             res.status(404).json({ message: "Photo de profil non trouvée" });
         } else {

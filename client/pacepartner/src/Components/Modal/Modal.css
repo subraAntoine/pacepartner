@@ -1,0 +1,105 @@
+.modal-component{
+    position: fixed;
+    z-index: 5;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    width: 700px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    border: solid #ccc 1px;
+}
+
+.modal-text{
+    font-size: 25px;
+    font-weight: 600;
+
+}
+
+.modal-btn{
+    width: 150px;
+    height: 50px;
+    border-radius: 25px;
+    border: #ccc 1px solid;
+    font-size: 18px;
+    cursor: pointer;
+    background: transparent;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    font-weight: 600;
+
+}
+
+.modal-btn::before{
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #ccc;
+
+    top: 0;
+    left: 0;
+    transition: .5s ease-in-out;
+    z-index: -1;
+    overflow: hidden;
+
+}
+
+.modal-btn:hover::before{
+    width: 100%;
+}
+
+.modal-btn2{
+    width: 150px;
+    height: 50px;
+    border-radius: 25px;
+    border: #ccc 1px solid;
+    font-size: 18px;
+    cursor: pointer;
+    background: transparent;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    font-weight: 600;
+
+}
+
+.modal-btn2::before{
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: var(--main-yellow);
+
+    top: 0;
+    left: 0;
+    transition: .5s ease-in-out;
+    z-index: -1;
+    overflow: hidden;
+
+}
+
+.modal-btn2:hover::before{
+    width: 100%;
+}
+
+.btn-modal-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 90%;
+
+}
+
+.modal-component-content{
+    height: 100%;
+}
