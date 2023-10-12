@@ -7,7 +7,8 @@ import joinEntrainement from "../../Api/Entrainements/JoinEntrainement";
 import getProfilePic from "../../Api/User/GetProfilePic";
 import Modal from "../Modal/Modal";
 import DeleteEntrainement from "../../Api/Entrainements/DeleteEntrainement";
-import {MdDelete} from "react-icons/md";
+import {MdDelete, MdHighlightOff} from "react-icons/md";
+import LeaveEntrainement from "../../Api/Entrainements/LeaveEntrainement";
 
 import axios from "axios";
 import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
@@ -23,8 +24,9 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
     const [participantsInfo, setParticipantsInfo] = useState(null);
     const [modalTrigger, setModalTrigger] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
+    const[leaveModal, setLeaveModal] = useState(false);
 
-    const style = {zIndex:"3", color: "black", fontSize: "2rem", position: "absolute", bottom: "0", left: "0", margin: "0.8rem", cursor: "pointer"}
+    const style = {zIndex:"3", color: "black", fontSize: "2rem", position: "absolute", bottom: "0", left: "0", marginTop: "3rem", cursor: "pointer"}
 
 
     const handleJoinEntrainement = async () => {
@@ -90,6 +92,16 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
             console.log(err);
         }
 
+    }
+
+    const handleLeaveEntrainement = async () => {
+        try{
+            const response = await LeaveEntrainement(entrainement._id);
+            updateDataTrigger(true);
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 
@@ -163,6 +175,12 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
                     {
                         deleteModal && <Modal modalTrigger={deleteModal} setModalTrigger={setDeleteModal} textContent={"Etes vous sur de vouloir supprimer cet entrainement ?"} modalFunc={handleDeleteEntrainement}></Modal>
+                    }
+                    {
+                        entrainement.participants.some(participant => participant === user._id) && <MdHighlightOff onClick={() => setLeaveModal(!leaveModal)} style={style}></MdHighlightOff>
+                    }
+                    {
+                        leaveModal && <Modal modalTrigger={leaveModal} setModalTrigger={setLeaveModal} textContent={"Etes vous sur de vouloir quitter cet entrainement ?"} modalFunc={handleLeaveEntrainement}></Modal>
                     }
 
 

@@ -77,6 +77,23 @@ router.post('/joinEntrainement/:entrainementID', authToken, async (req, res) => 
     }
 });
 
+router.post('/leaveEntrainement/:entrainementID', authToken, async (req, res) => {
+    try{
+        const entrainementID = req.params.entrainementID;
+        const entrainement = await EntrainementModel.findById(entrainementID);
+        const userID = req.userId;
+        const index = entrainement.participants.indexOf(userID);
+        if (index > -1) {
+            entrainement.participants.splice(index, 1);
+            await entrainement.save();
+            res.status(200).json({message: "Vous avez quitté l'entrainement !"});
+        } else {
+            res.status(500).json({message: "Vous n'êtes pas inscrit à cet entrainement !"});
+        }
+    }catch (err){
+        console.log(err);
+    }
+});
 
 
 module.exports = {entrainementRouter: router};
