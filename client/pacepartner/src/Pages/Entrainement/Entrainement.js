@@ -18,6 +18,9 @@ export default function Entrainement () {
     const {user, setUser} = useUser();
     const [updateDataTrigger, setUpdateDataTrigger] = useState(false);
     const [entrainementList, setEntrainementList] = useState([]);
+    const [maxDistance, setMaxDistance] = useState(10);
+    const [sportFilter, setSportFilter] = useState("none");
+    const [seanceFilter, setSeanceFilter] = useState("none");
 
 
     const navigate = useNavigate();
@@ -56,7 +59,7 @@ export default function Entrainement () {
                 const userPosition = await GetGPSCoordinates(user.localisation);
 
                 if (userPosition) {
-                    const entrainementTemp = await GetAllEntrainement(userPosition[0], userPosition[1]);
+                    const entrainementTemp = await GetAllEntrainement(userPosition[0], userPosition[1], maxDistance);
                     setEntrainementList(entrainementTemp.data.entrainements);
                 }
 
@@ -85,6 +88,21 @@ export default function Entrainement () {
         setDisplayCreaEntrainement(!displayCreaEntrainement);
     }
 
+    const handleDistance = (e) => {
+        setMaxDistance(e.target.value);
+    }
+
+    const handleSportFilter = (e) => {
+        setSportFilter(e.target.value);
+
+    }
+
+    const handleSeanceFilter = (e) => {
+        setSeanceFilter(e.target.value);
+        console.log(seanceFilter);
+
+    }
+
     return (
         <>
             <LeftMenu></LeftMenu>
@@ -93,6 +111,43 @@ export default function Entrainement () {
                 {
                     displayCreaEntrainement && <CreationEntrainement updateDataTrigger={setUpdateDataTrigger} toggleCreaEntrainement={toggleCreaEntrainement}></CreationEntrainement>
                 }
+
+                <div className="activity-filter-container">
+                    <h3 className={"filter-title"}>Filtrer vos entrainements !</h3>
+                    <div className="filter-container">
+                        <div className="distance-max-wrapper">
+                            <h3 className={"distance-max-content"}>Distance : {maxDistance} km</h3>
+                            <input step={"10"} className={"distance-max-slider"} type="range" max={"300"} min={"0"} defaultValue={"20"} onChange={handleDistance}/>
+                        </div>
+
+                        <div className="sport-menu-wrapper">
+                            <h3 className={"sport-menu-title"}>Sport</h3>
+                            <select onChange={handleSportFilter} className={"sport-menu"}>
+                                <option  value="none">Tous les sports</option>
+                                <option value="running">Running</option>
+                                <option value="trail">Trail</option>
+                                <option value="cyclisme">Cyclisme</option>
+                            </select>
+                        </div>
+
+                        <div className="sport-menu-wrapper">
+                            <h3 className={"sport-menu-title"}>Type de séance</h3>
+                            <select onChange={handleSeanceFilter} className={"sport-menu"}>
+                                <option  value="none">Tous les types</option>
+                                <option value="endurance">Endurance</option>
+                                <option value="seuil">Seuil</option>
+                                <option value="vma">VMA</option>
+                                <option value="sortielongue">Sortie longue</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <button className={"filter-update-btn"} onClick={() => setUpdateDataTrigger(true)}>Update</button>
+                </div>
+
+
+
 
                 <div className="new-entrainement-wrapper">
                     {

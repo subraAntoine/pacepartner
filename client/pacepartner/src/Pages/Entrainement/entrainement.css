@@ -2,3 +2,127 @@
     margin-left: 420px;
     padding: 50px;
 }
+
+.activity-filter-container{
+    margin-top: 30px;
+}
+
+.filter-title{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.filter-container{
+    margin: 40px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+
+}
+
+.distance-max-content{
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.distance-max-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.distance-max-wrapper::after{
+    content:'';
+    width: 2%;
+    height: 2px;
+    background-color: black;
+    margin-top: 10px;
+    transition: .5s ease-in-out;
+
+}
+
+.distance-max-wrapper:hover::after{
+
+    width: 20%;
+
+
+}
+
+.distance-max-slider{
+    width: 300px;
+    appearance: none;
+
+    height: 25px; /* Specified height */
+    background: #ccc; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 12px;
+    padding: 2px 10px;
+
+}
+
+.distance-max-slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+.distance-max-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px; /* Set a specific slider handle width */
+    height: 20px; /* Slider handle height */
+
+
+    border-radius: 50%;
+    background: black; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+
+}
+
+.sport-menu-wrapper{
+    width: 300px;
+    display: flex;
+    align-items: center;
+
+    flex-direction: column;
+
+}
+
+.sport-menu{
+    width: 300px;
+    height: 30px;
+    margin-top: 5px;
+    background-color: rgba(204, 204, 204, 0.7);
+    border-radius: 12px;
+    border: none;
+    font-size: 1.2rem;
+    padding: 2px 10px;
+    margin-bottom: 5px;
+}
+
+.sport-menu-wrapper::after{
+    content:'';
+    width: 2%;
+    height: 2px;
+    background-color: black;
+    margin-top: 10px;
+    transition: .5s ease-in-out;
+
+}
+
+.sport-menu-wrapper:hover::after{
+
+    width: 20%;
+
+}
+
+.sport-menu-title{
+
+        font-weight: 400;
+        font-size: 20px;
+
+
+}

@@ -59,7 +59,9 @@ router.get('/allMatch', authToken, async (req, res) => {
         const Long = parseFloat(userLong);
 
 
-        const maxDistance = 5000;
+        const maxDistance = req.query.maxDistance * 1000;
+        console.log(maxDistance);
+
         const user = await UserModel.findById(req.userId);
 
         if(!user){

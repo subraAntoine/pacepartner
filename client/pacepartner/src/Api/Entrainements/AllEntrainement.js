@@ -1,11 +1,12 @@
 import axios from "axios";
 
-const GetAllEntrainement = async (userLat, userLong) => {
+const GetAllEntrainement = async (userLat, userLong, maxDistance) => {
     try {
         const response = await axios.get("http://localhost:3002/entrainements/allMatch", {
             params: {
                 userLat,
-                userLong
+                userLong,
+                maxDistance
             },
             withCredentials: true  // Avec les paramètres de la requête
         });

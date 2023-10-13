@@ -12,6 +12,12 @@ const pointSchema = new mongoose.Schema({
     }
 });
 
+const commentSchema = new mongoose.Schema({
+    author: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+    content: {type: String, required: true},
+    date: {type: Date, default: Date.now}
+});
+
 const EntrainementSchema = new mongoose.Schema({
     dateEntrainement: {type: Date, required: true},
     heureEntrainement: {type: String, required: true},
@@ -29,7 +35,9 @@ const EntrainementSchema = new mongoose.Schema({
     sportEntrainement: {type: String, required: true},
     distanceEntrainement: {type: Number, required: true},
     dureeEntrainement: {type: Number, required: true},
-    gpsLocation: pointSchema
+    gpsLocation: pointSchema,
+    comments: [commentSchema]
+
 });
 
 

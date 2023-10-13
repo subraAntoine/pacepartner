@@ -7,7 +7,7 @@ import joinEntrainement from "../../Api/Entrainements/JoinEntrainement";
 import getProfilePic from "../../Api/User/GetProfilePic";
 import Modal from "../Modal/Modal";
 import DeleteEntrainement from "../../Api/Entrainements/DeleteEntrainement";
-import {MdDelete, MdHighlightOff} from "react-icons/md";
+import {MdDelete, MdHighlightOff, MdComment} from "react-icons/md";
 import LeaveEntrainement from "../../Api/Entrainements/LeaveEntrainement";
 
 import axios from "axios";
