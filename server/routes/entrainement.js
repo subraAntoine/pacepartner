@@ -52,15 +52,22 @@ router.get('/all', authToken, async (req, res) => {
 
 router.get('/allMatch', authToken, async (req, res) => {
     try {
+
+
+        const sort = "VMA,record10km,recordSemi,recordMarathon";
+
         const userLat = 45.597108;
         const userLong = 5.27212;
 
         const Lat = parseFloat(userLat);
         const Long = parseFloat(userLong);
 
+        const sport = req.query.sportEntrainement;
+        const type = req.query.typeEntrainement;
+
 
         const maxDistance = req.query.maxDistance * 1000;
-        console.log(maxDistance);
+
 
         const user = await UserModel.findById(req.userId);
 
@@ -68,7 +75,8 @@ router.get('/allMatch', authToken, async (req, res) => {
             res.status(500).json({message: "Aucun utilisateur trouvé"});
         }
 
-        const entrainements = await EntrainementModel.aggregate([{
+
+        const filter = {
             $geoNear: {
                 near: {
                     type: "Point",
@@ -78,11 +86,44 @@ router.get('/allMatch', authToken, async (req, res) => {
                 maxDistance: maxDistance,
                 spherical: true
             }
-        }]);
+        };
 
+        const matchConditions = [];
+
+        if (sport !== "none") {
+            matchConditions.push({ sportEntrainement: sport });
+        }
+
+        if (type !== "none") {
+            matchConditions.push({ typeEntrainement: type });
+        }
+
+        // Combinez les conditions en utilisant l'opérateur $and pour exiger à la fois le sport et le type
+        if (matchConditions.length > 0) {
+            filter.$geoNear.query = { $and: matchConditions };
+        }
+
+
+
+
+
+        const entrainements = await EntrainementModel.aggregate([filter]);
         console.log(entrainements);
 
-            res.status(200).json({entrainements: entrainements});
+
+
+        entrainements.forEach((entrainement) => {
+            const niveauEntrainement = entrainement.niveau;
+            const infoOrganisateur = UserModel.findById(entrainement.organisateur, {_id: 0});
+
+            if(infoOrganisateur.volumeHebdo && user.volumeHebdo){
+
+            }
+
+
+        });
+
+        res.status(200).json({entrainements: entrainements});
 
 
     } catch (error) {

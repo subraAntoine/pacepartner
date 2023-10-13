@@ -19,6 +19,9 @@
     align-items: center;
     justify-content: center;
     gap: 50px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
 
 }
 
@@ -50,6 +53,8 @@
 
 
 }
+
+
 
 .distance-max-slider{
     width: 300px;
@@ -123,6 +128,10 @@
 
         font-weight: 400;
         font-size: 20px;
+}
 
-
+.refreshbtnfilter{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

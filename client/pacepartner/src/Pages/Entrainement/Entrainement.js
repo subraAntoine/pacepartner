@@ -1,7 +1,7 @@
 
 import "./entrainement.css";
 import LeftMenu from "../../Layout/LeftMenu/LeftMenu";
-import {MdAddCircle, MdAddCircleOutline} from "react-icons/md";
+import {MdAddCircle, MdAddCircleOutline, MdRestartAlt} from "react-icons/md";
 import {useEffect, useState} from "react";
 import CreationEntrainement from "../../Components/CreationEntrainement/CreationEntrainement";
 import getUserInfo from "../../Api/User/UserInfo";
@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import GetAllEntrainement from "../../Api/Entrainements/AllEntrainement";
 import CardEntrainement from "../../Components/CardEntrainement/CardEntrainement";
 import GetGPSCoordinates from "../../Api/Entrainements/GetGPSCoordinates";
+
 
 export default function Entrainement () {
 
@@ -24,6 +25,9 @@ export default function Entrainement () {
 
 
     const navigate = useNavigate();
+
+    const style = {zIndex:"2", color: "black", fontSize: "3rem",  cursor: "pointer", textAlign: "center", position: "relative"}
+
 
 
 
@@ -59,7 +63,7 @@ export default function Entrainement () {
                 const userPosition = await GetGPSCoordinates(user.localisation);
 
                 if (userPosition) {
-                    const entrainementTemp = await GetAllEntrainement(userPosition[0], userPosition[1], maxDistance);
+                    const entrainementTemp = await GetAllEntrainement(userPosition[0], userPosition[1], maxDistance, sportFilter, seanceFilter);
                     setEntrainementList(entrainementTemp.data.entrainements);
                 }
 
@@ -123,10 +127,10 @@ export default function Entrainement () {
                         <div className="sport-menu-wrapper">
                             <h3 className={"sport-menu-title"}>Sport</h3>
                             <select onChange={handleSportFilter} className={"sport-menu"}>
-                                <option  value="none">Tous les sports</option>
+                                <option  value={"none"}>Tous les sports</option>
                                 <option value="running">Running</option>
                                 <option value="trail">Trail</option>
-                                <option value="cyclisme">Cyclisme</option>
+                                <option value="velo">Cyclisme</option>
                             </select>
                         </div>
 
@@ -134,16 +138,21 @@ export default function Entrainement () {
                             <h3 className={"sport-menu-title"}>Type de séance</h3>
                             <select onChange={handleSeanceFilter} className={"sport-menu"}>
                                 <option  value="none">Tous les types</option>
-                                <option value="endurance">Endurance</option>
-                                <option value="seuil">Seuil</option>
-                                <option value="vma">VMA</option>
-                                <option value="sortielongue">Sortie longue</option>
+                                <option value="Endurance">Endurance</option>
+                                <option value="Seuil">Seuil</option>
+                                <option value="VMA">VMA</option>
+                                <option value="SortieLongue">Sortie longue</option>
                             </select>
                         </div>
 
                     </div>
 
-                    <button className={"filter-update-btn"} onClick={() => setUpdateDataTrigger(true)}>Update</button>
+                    <div className="refreshbtnfilter">
+                        <MdRestartAlt className={"refresh-icon-filter"} style={style} onClick={() => setUpdateDataTrigger(true)}></MdRestartAlt>
+                    </div>
+
+
+
                 </div>
 
 

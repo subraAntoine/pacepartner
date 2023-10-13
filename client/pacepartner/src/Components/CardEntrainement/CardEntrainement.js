@@ -127,6 +127,9 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                         }
                     })()
                 }>{entrainement.sportEntrainement} / {entrainement.typeEntrainement}</h3>
+                <h3>A {
+                    (entrainement.distance / 1000).toFixed(1)
+                }km de vous !</h3>
                 <h3>Date de l'entrainement : <span className={"card-text-span"}>{
                     date
                 }</span> </h3>
