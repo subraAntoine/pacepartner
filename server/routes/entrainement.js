@@ -108,22 +108,71 @@ router.get('/allMatch', authToken, async (req, res) => {
 
 
         const entrainements = await EntrainementModel.aggregate([filter]);
-        console.log(entrainements);
 
 
 
-        entrainements.forEach((entrainement) => {
-            const niveauEntrainement = entrainement.niveau;
-            const infoOrganisateur = UserModel.findById(entrainement.organisateur, {_id: 0});
+        const entrainementAvecScore = await Promise.all(entrainements.map(async (entrainement) => {
+            let niveauEntrainement = 0;
 
-            if(infoOrganisateur.volumeHebdo && user.volumeHebdo){
+            // Utilisez await pour attendre la résolution de la promesse UserModel.findById
+            const infoOrganisateur = await UserModel.findById(entrainement.organisateur);
 
+
+            if (infoOrganisateur && user) { // Assurez-vous que les deux objets existent
+                if (infoOrganisateur.RunVolumeHebdo && user.RunVolumeHebdo) {
+                    niveauEntrainement += Math.abs(infoOrganisateur.RunVolumeHebdo - user.RunVolumeHebdo) * 8;
+
+                }
+                if(infoOrganisateur.VMA && user.VMA){
+                    niveauEntrainement += Math.abs(infoOrganisateur.VMA - user.VMA) * 10;
+
+                }
+                if(infoOrganisateur.record5km && user.record5km) {
+                    const [h1, min1, sec1] = infoOrganisateur.record5km.split(':');
+                    const [h2, min2, sec2] = user.record5km.split(':');
+                    const time1 = (parseInt(h1) * 3600) + (parseInt(min1) * 60) + parseInt(sec1);
+                    const time2 = (parseInt(h2) * 3600) + (parseInt(min2) * 60) + parseInt(sec2);
+
+                    niveauEntrainement += Math.abs(time1 - time2);
+                }
+                if(infoOrganisateur.record10km && user.record10km) {
+                    const [h1, min1, sec1] = infoOrganisateur.record10km.split(':');
+                    const [h2, min2, sec2] = user.record10km.split(':');
+                    const time1 = (parseInt(h1) * 3600) + (parseInt(min1) * 60) + parseInt(sec1);
+                    const time2 = (parseInt(h2) * 3600) + (parseInt(min2) * 60) + parseInt(sec2);
+
+                    niveauEntrainement += parseInt(Math.abs(time1 - time2)/2);
+                }
+                if(infoOrganisateur.recordSemi && user.recordSemi) {
+                    const [h1, min1, sec1] = infoOrganisateur.recordSemi.split(':');
+                    const [h2, min2, sec2] = user.recordSemi.split(':');
+                    const time1 = (parseInt(h1) * 3600) + (parseInt(min1) * 60) + parseInt(sec1);
+                    const time2 = (parseInt(h2) * 3600) + (parseInt(min2) * 60) + parseInt(sec2);
+
+                    niveauEntrainement += parseInt(Math.abs(time1 - time2)/3);
+                }
+                if(infoOrganisateur.recordMarathon && user.recordMarathon) {
+                    const [h1, min1, sec1] = infoOrganisateur.recordMarathon.split(':');
+                    const [h2, min2, sec2] = user.recordMarathon.split(':');
+                    const time1 = (parseInt(h1) * 3600) + (parseInt(min1) * 60) + parseInt(sec1);
+                    const time2 = (parseInt(h2) * 3600) + (parseInt(min2) * 60) + parseInt(sec2);
+
+                    niveauEntrainement += parseInt(Math.abs(time1 - time2) / 4);
+                }
+
+                entrainement.niveau = niveauEntrainement;
+
+                return entrainement;
             }
+        }));
 
+        console.log(entrainementAvecScore);
 
+        entrainementAvecScore.sort((a, b) => {
+            return a.niveau - b.niveau;
         });
 
-        res.status(200).json({entrainements: entrainements});
+        res.status(200).json({entrainements: entrainementAvecScore});
 
 
     } catch (error) {
