@@ -30,6 +30,7 @@ const UserSchema = new mongoose.Schema({
     friendRequestsSent: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
     trainingJoined: [{type: mongoose.Schema.Types.ObjectId, ref: 'entrainements'}],
     favoriteTrainings: [{type: mongoose.Schema.Types.ObjectId, ref: 'entrainements'}],
+    createdTrainings: [{type: mongoose.Schema.Types.ObjectId, ref: 'entrainements'}],
 });
 
 const UserModel = mongoose.model('users', UserSchema);

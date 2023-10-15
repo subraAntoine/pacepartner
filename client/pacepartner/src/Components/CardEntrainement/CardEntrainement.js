@@ -27,6 +27,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
     const [modalTrigger, setModalTrigger] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
     const[leaveModal, setLeaveModal] = useState(false);
+    const [displayComments, setDisplayComments] = useState(false);
 
     const style = {zIndex:"3", color: "black", fontSize: "2rem", position: "absolute", bottom: "0", left: "0", marginTop: "3rem", cursor: "pointer"}
     const styleFavorite = {zIndex:"3", color: "black", fontSize: "1.5rem", cursor: "pointer"}
@@ -132,7 +133,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
 
     return (
-        <>
+        <div className={"global-card-container"}>
 
         <div className="entrainement-card-wrap">
             <div className="favorite-icon-div">
@@ -217,6 +218,10 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                         leaveModal && <Modal modalTrigger={leaveModal} setModalTrigger={setLeaveModal} textContent={"Etes vous sur de vouloir quitter cet entrainement ?"} modalFunc={handleLeaveEntrainement}></Modal>
                     }
 
+                    {
+                        <button onClick={() => setDisplayComments(!displayComments)}>Comments</button>
+                    }
+
 
 
                 </div>
@@ -228,6 +233,13 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
             </div>
         </div>
-        </>
+            {
+                displayComments &&  (
+                    <div className={"comments-container"}>
+                        <h3>Commentaires :</h3>
+                    </div>
+                )
+            }
+        </div>
     )
 }

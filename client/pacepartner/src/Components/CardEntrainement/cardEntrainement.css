@@ -52,7 +52,7 @@
     width: 90%;
     border-radius: 10px;
     padding: 20px;
-    margin: 80px 0;
+
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
     position: relative;
     z-index: 3;
@@ -174,4 +174,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.global-card-container{
+    margin: 80px 0;
 }

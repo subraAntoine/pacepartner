@@ -8,9 +8,13 @@ const router = express.Router();
 router.post('/create', authToken, async (req, res) => {
     try {
         const data = req.body;
+        const user = await UserModel.findById(req.userId);
+
         const newEntrainement = new EntrainementModel(data);
         newEntrainement.organisateur = req.userId;
         await newEntrainement.save();
+        user.createdTrainings.push(newEntrainement._id);
+        await user.save();
         res.status(200).json({message: "Entrainement créé avec succès !"});
     } catch (error) {
         res.status(500).json({message: "Erreur lors de la création de l'entrainement", error: error});
@@ -20,6 +24,7 @@ router.post('/create', authToken, async (req, res) => {
 router.post('/delete/:entrainementID', authToken, async (req, res) => {
     try{
         const idEntrainement = req.params.entrainementID;
+        const user = await UserModel.findById(req.userId);
         const entrainement = await EntrainementModel.findById(idEntrainement);
         if(!entrainement){
             res.status(500).json({message: "Aucun entrainement trouvé"});
@@ -28,6 +33,10 @@ router.post('/delete/:entrainementID', authToken, async (req, res) => {
             res.status(500).json({message: "Vous n'êtes pas l'organisateur de cet entrainement"});
         }else{
             const deletedEntrainement = await EntrainementModel.findByIdAndDelete(idEntrainement);
+            const index = user.createdTrainings.indexOf(idEntrainement);
+            user.createdTrainings.splice(index, 1);
+            await user.save();
+
             if(!deletedEntrainement){
                 res.status(500).json({message: "Erreur lors de la suppression de l'entrainement"});
             }
