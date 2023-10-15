@@ -236,6 +236,33 @@ router.post('/addFavorite/:entrainementID', authToken, async (req, res) => {
     }
 })
 
+router.post('/removeFavorite/:entrainementID', authToken, async (req, res) => {
+    try {
+        const entraimentID = req.params.entrainementID;
+        const userID = req.userId;
+        const user = await UserModel.findById(userID);
+        const entrainement = await EntrainementModel.findById(entraimentID);
+        if(entrainement){
+            const index = user.favoriteTrainings.indexOf(entraimentID);
+            if(index > -1){
+                user.favoriteTrainings.splice(index, 1);
+                await user.save();
+                res.status(200).json({message: "L'entrainement a bien été supprimé des favoris !"});
+            } else {
+                res.status(500).json({message: "L'entrainement n'est pas dans les favoris !"});
+            }
+        } else {
+            res.status(500).json({message: "L'entrainement n'existe pas !"});
+
+        }
+
+    } catch (err) {
+        res.status(500).json({message: "Erreur lors de la suppression de l'entrainement des favoris", error: err});
+    }
+
+})
+
+
 router.post('/leaveEntrainement/:entrainementID', authToken, async (req, res) => {
     try{
         const entrainementID = req.params.entrainementID;

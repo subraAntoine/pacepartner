@@ -10,6 +10,7 @@ import DeleteEntrainement from "../../Api/Entrainements/DeleteEntrainement";
 import {MdDelete, MdHighlightOff, MdComment, MdFavoriteBorder, MdFavorite} from "react-icons/md";
 import LeaveEntrainement from "../../Api/Entrainements/LeaveEntrainement";
 import AddToFavorites from "../../Api/Entrainements/AddToFavorites";
+import RemoveFavorite from "../../Api/Entrainements/RemoveFavorite";
 
 import axios from "axios";
 import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
@@ -29,6 +30,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
     const style = {zIndex:"3", color: "black", fontSize: "2rem", position: "absolute", bottom: "0", left: "0", marginTop: "3rem", cursor: "pointer"}
     const styleFavorite = {zIndex:"3", color: "black", fontSize: "1.5rem", cursor: "pointer"}
+
 
     const handleJoinEntrainement = async () => {
         try{
@@ -116,6 +118,15 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
     }
 
+    const handleRemoveFavorite = async () => {
+        try{
+            const response = await RemoveFavorite(entrainement._id);
+            updateDataTrigger(true);
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
 
 
@@ -126,7 +137,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
         <div className="entrainement-card-wrap">
             <div className="favorite-icon-div">
                 {
-                    user.favoriteTrainings.includes(entrainement._id) ? <MdFavorite onClick={handleAddFavorite} style={styleFavorite}></MdFavorite> : <MdFavoriteBorder onClick={handleAddFavorite} style={styleFavorite}></MdFavoriteBorder>
+                    user.favoriteTrainings.includes(entrainement._id) ? <MdFavorite onClick={handleRemoveFavorite}  style={styleFavorite}></MdFavorite> : <MdFavoriteBorder onClick={handleAddFavorite} style={styleFavorite}></MdFavoriteBorder>
                 }
 
             </div>
