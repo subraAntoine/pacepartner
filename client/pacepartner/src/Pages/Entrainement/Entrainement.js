@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import GetAllEntrainement from "../../Api/Entrainements/AllEntrainement";
 import CardEntrainement from "../../Components/CardEntrainement/CardEntrainement";
 import GetGPSCoordinates from "../../Api/Entrainements/GetGPSCoordinates";
+import Switch from '@mui/material/Switch';
 
 
 export default function Entrainement () {
@@ -22,6 +23,7 @@ export default function Entrainement () {
     const [maxDistance, setMaxDistance] = useState(10);
     const [sportFilter, setSportFilter] = useState("none");
     const [seanceFilter, setSeanceFilter] = useState("none");
+    const [adaptedEntrainementList, setAdaptedEntrainementList] = useState(false);
 
 
     const navigate = useNavigate();
@@ -63,7 +65,7 @@ export default function Entrainement () {
                 const userPosition = await GetGPSCoordinates(user.localisation);
 
                 if (userPosition) {
-                    const entrainementTemp = await GetAllEntrainement(userPosition[0], userPosition[1], maxDistance, sportFilter, seanceFilter);
+                    const entrainementTemp = await GetAllEntrainement(userPosition[0], userPosition[1], maxDistance, sportFilter, seanceFilter, adaptedEntrainementList);
                     setEntrainementList(entrainementTemp.data.entrainements);
                 }
 
@@ -107,6 +109,13 @@ export default function Entrainement () {
 
     }
 
+    const handleAdaptEntrainement = (e) => {
+        setAdaptedEntrainementList(!adaptedEntrainementList);
+        setUpdateDataTrigger(true);
+    }
+
+
+
     return (
         <>
             <LeftMenu></LeftMenu>
@@ -118,6 +127,14 @@ export default function Entrainement () {
 
                 <div className="activity-filter-container">
                     <h3 className={"filter-title"}>Filtrer vos entrainements !</h3>
+                    <div className="adapt-entrainment-div">
+
+                        <Switch color={"secondary"}  onChange={handleAdaptEntrainement}></Switch>
+                        <label className={"adapt-entrainment-label"}>Adapter à mon niveau</label>
+
+                    </div>
+
+
                     <div className="filter-container">
                         <div className="distance-max-wrapper">
                             <h3 className={"distance-max-content"}>Distance : {maxDistance} km</h3>

@@ -52,8 +52,10 @@
     width: 90%;
     border-radius: 10px;
     padding: 20px;
-    margin: 40px 0;
+    margin: 80px 0;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 3;
 }
 
 .entrainement-card-header{
@@ -154,4 +156,21 @@
     padding: 10px;
     width: 100%;
 
+}
+
+.favorite-icon-div{
+    position: absolute;
+    top: -58px;
+    background: white;
+    margin: 10px;
+    height: 50px;
+    width: 100px;
+
+    cursor: pointer;
+    z-index: -1;
+    border-radius: 25px 25px 0 0;
+    box-shadow: 0px -5px 5px 0 rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

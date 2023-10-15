@@ -25,9 +25,11 @@ const UserSchema = new mongoose.Schema({
     FTP: {type: Number},
     RunVolumeHebdo: {type: Number},
     BikeVolumeHebdo: {type: Number},
-    NbEntrainementParticipe: {type: Number, default: 0},
     friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
     friendRequests: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
+    friendRequestsSent: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}],
+    trainingJoined: [{type: mongoose.Schema.Types.ObjectId, ref: 'entrainements'}],
+    favoriteTrainings: [{type: mongoose.Schema.Types.ObjectId, ref: 'entrainements'}],
 });
 
 const UserModel = mongoose.model('users', UserSchema);

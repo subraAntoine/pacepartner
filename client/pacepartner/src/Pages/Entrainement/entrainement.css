@@ -54,6 +54,21 @@
 
 }
 
+.adapt-entrainment-label{
+    margin-left: 10px;
+    font-size: 22px;
+}
+
+.adapt-entrainment-div{
+    margin-left: 50px;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+
+}
+
+
+
 
 
 .distance-max-slider{
