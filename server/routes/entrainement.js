@@ -295,4 +295,6 @@ router.post('/leaveEntrainement/:entrainementID', authToken, async (req, res) =>
 });
 
 
+
+
 module.exports = {entrainementRouter: router};
