@@ -11,10 +11,14 @@ import {MdDelete, MdHighlightOff, MdComment, MdFavoriteBorder, MdFavorite} from 
 import LeaveEntrainement from "../../Api/Entrainements/LeaveEntrainement";
 import AddToFavorites from "../../Api/Entrainements/AddToFavorites";
 import RemoveFavorite from "../../Api/Entrainements/RemoveFavorite";
+import AddComments from "../../Api/Commentaires/AddComments";
+import GetComments from "../../Api/Commentaires/GetComments";
 
 import axios from "axios";
 import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
 import deleteEntrainement from "../../Api/Entrainements/DeleteEntrainement";
+import addComments from "../../Api/Commentaires/AddComments";
+import getComments from "../../Api/Commentaires/GetComments";
 
 
 export default function CardEntrainement({entrainement, updateDataTrigger}) {
@@ -28,7 +32,9 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
     const [deleteModal, setDeleteModal] = useState(false);
     const[leaveModal, setLeaveModal] = useState(false);
     const [displayComments, setDisplayComments] = useState(false);
-
+    const [commentContent, setCommentContent] = useState(null)
+    const [commentList, setCommentList] = useState(null)
+    const [updateCommentaire, setUpdateCommentaire] = useState(false)
     const style = {zIndex:"3", color: "black", fontSize: "2rem", position: "absolute", bottom: "0", left: "0", marginTop: "3rem", cursor: "pointer"}
     const styleFavorite = {zIndex:"3", color: "black", fontSize: "1.5rem", cursor: "pointer"}
 
@@ -77,13 +83,28 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                 }
             }
 
+            const getCommentaireList = async () => {
+                try{
+                    const commentaireList = await getComments(entrainement._id);
+                    setCommentList(commentaireList.data.data);
+                    setUpdateCommentaire(false)
+
+
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+
             getOrganisateurPseudo();
             getParticipantsPseudo();
+            getCommentaireList()
+
+            console.log(commentList)
 
 
 
         }
-    }, [entrainement])
+    }, [entrainement, updateCommentaire])
 
 
     const handleDeleteEntrainement = async () => {
@@ -127,6 +148,23 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const handleCommentContent = (e) => {
+        setCommentContent(e.target.value)
+        console.log(commentContent)
+    }
+
+    const handleAddComment = async () => {
+        try {
+
+            const response = await addComments(commentContent,entrainement._id);
+            setUpdateCommentaire(true)
+            setCommentContent('')
+        } catch (err) {
+            console.log(err)
+        }
+        
     }
 
 
@@ -237,6 +275,17 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                 displayComments &&  (
                     <div className={"comments-container"}>
                         <h3>Commentaires :</h3>
+                        <div className="comments-items">
+                            {
+                                commentList && commentList.map((comment, index) => {
+                                    return <h3 key={index}>{comment.content}</h3>
+                                })
+                            }
+                        </div>
+                        <div className="comment-input">
+                            <input value={commentContent} type="text" onChange={handleCommentContent}/>
+                            <button type={"submit"} onClick={handleAddComment}>Envoyer</button>
+                        </div>
                     </div>
                 )
             }

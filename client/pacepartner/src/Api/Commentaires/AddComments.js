@@ -1,8 +1,14 @@
 import axios from "axios";
 
-const AddComments = async (content, entrainement) => {
+const AddComments = async (contenuCommentaire, entrainementID) => {
     try {
-        const response = axios.post('http://localhost:3002/commentaires/addCommentaire', {
+
+        const data = {
+            contenuCommentaire: contenuCommentaire,
+            entrainementID: entrainementID
+        }
+
+        const response = await axios.post('http://localhost:3002/commentaires/addCommentaire',data, {
 
             withCredentials: true
         })
