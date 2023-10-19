@@ -32,11 +32,12 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
     const [deleteModal, setDeleteModal] = useState(false);
     const[leaveModal, setLeaveModal] = useState(false);
     const [displayComments, setDisplayComments] = useState(false);
-    const [commentContent, setCommentContent] = useState(null)
+    const [commentContent, setCommentContent] = useState('')
     const [commentList, setCommentList] = useState(null)
     const [updateCommentaire, setUpdateCommentaire] = useState(false)
     const style = {zIndex:"3", color: "black", fontSize: "2rem", position: "absolute", bottom: "0", left: "0", marginTop: "3rem", cursor: "pointer"}
     const styleFavorite = {zIndex:"3", color: "black", fontSize: "1.5rem", cursor: "pointer"}
+    const [commentsInfo, setCommentsInfo] = useState(null)
 
 
     const handleJoinEntrainement = async () => {
@@ -83,28 +84,18 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                 }
             }
 
-            const getCommentaireList = async () => {
-                try{
-                    const commentaireList = await getComments(entrainement._id);
-                    setCommentList(commentaireList.data.data);
-                    setUpdateCommentaire(false)
 
-
-                } catch (err) {
-                    console.log(err)
-                }
-            }
 
             getOrganisateurPseudo();
             getParticipantsPseudo();
-            getCommentaireList()
+
 
             console.log(commentList)
 
 
 
         }
-    }, [entrainement, updateCommentaire])
+    }, [entrainement])
 
 
     const handleDeleteEntrainement = async () => {
@@ -161,11 +152,63 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
             const response = await addComments(commentContent,entrainement._id);
             setUpdateCommentaire(true)
             setCommentContent('')
+            handleLoadComments()
         } catch (err) {
             console.log(err)
         }
         
     }
+
+    const getCommentsInfo = async (commentaireList) => {
+        try {
+            if (!Array.isArray(commentaireList)) {
+                throw new Error('commentaireList n\'est pas un tableau.');
+            }
+
+           console.log(commentaireList)
+
+            const commentsTemp = await Promise.all(commentaireList.map(async (comment) => {
+                const authorName = await GetUserPseudo(comment.author);
+                const authorPic = await getProfilePic(comment.author);
+                return { name: authorName, pic: authorPic.data.profilePic, content: comment.content };
+            }));
+            console.log(commentsTemp)
+            setCommentsInfo(commentsTemp);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleLoadComments = async () => {
+        try {
+
+            const commentaireList = await getComments(entrainement._id);
+            setCommentList(commentaireList.data.data);
+            const commentairesInfo = await getCommentsInfo(commentaireList.data.data)
+
+
+            setUpdateCommentaire(false)
+            setDisplayComments(true)
+
+
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+
+    const handleDisplayComments = async () => {
+        if(displayComments === false) {
+            await handleLoadComments()
+            setDisplayComments(true)
+
+        }else{
+            setDisplayComments(false)
+        }
+
+    }
+
+
 
 
 
@@ -257,7 +300,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                     }
 
                     {
-                        <button onClick={() => setDisplayComments(!displayComments)}>Comments</button>
+                        <button onClick={handleDisplayComments}>Comments</button>
                     }
 
 
@@ -277,8 +320,8 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                         <h3>Commentaires :</h3>
                         <div className="comments-items">
                             {
-                                commentList && commentList.map((comment, index) => {
-                                    return <h3 key={index}>{comment.content}</h3>
+                                commentsInfo && commentsInfo.map((comment, index) => {
+                                    return <h3 key={index}>{comment.content}{comment.name}</h3>
                                 })
                             }
                         </div>
