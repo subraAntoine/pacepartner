@@ -179,3 +179,21 @@
 .global-card-container{
     margin: 80px 0;
 }
+
+.comment-profile-picture{
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    border-radius: 50%;
+}
+
+.commentaire-container{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    border: solid 1px #cccccc;
+    border-radius: 10px;
+    margin: 5px 0;
+    padding: 10px;
+    align-items: center;
+}

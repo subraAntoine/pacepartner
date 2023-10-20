@@ -68,6 +68,32 @@ router.get('/getComments/:entrainementID', authToken, async (req, res) => {
     }
 })
 
+router.post('/like/:commentaireID', authToken, async (req, res) => {
+    try {
+        const commentaireId = req.params.commentaireID;
+        const userID = req.userId
+        const commentaire = await CommentaireModel.findById(commentaireId);
+        if(commentaire){
+            if(commentaire.likedBy.includes(userID)){
+                const index = commentaire.likedBy.indexOf(userID);
+                commentaire.likedBy.splice(index, 1);
+                await commentaire.save();
+                res.status(200).json({message: "Like supprimé avec succès."});
+            }else{
+                commentaire.likedBy.push(userID);
+                await commentaire.save();
+                res.status(200).json({message: "Like ajouté avec succès"})
+            }
+
+        }else{
+            res.status(500).json({message: "Le commentaire n'existe pas."})
+        }
+
+    } catch (err) {
+        res.status(500).json({message: "Erreur lors du like"})
+    }
+})
+
 
 
 

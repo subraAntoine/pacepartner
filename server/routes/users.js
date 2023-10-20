@@ -189,5 +189,27 @@ router.get('/userProfilePic/:ID', authToken, async (req, res) => {
 }});
 
 
+router.post('/userProfileInfos', authToken, async (req, res) => {
+    try {
+        const usersID = req.body.usersId; // Utilisez "usersID" au lieu de "usersId"
+        const users = await UserModel.find({ _id: { $in: usersID } }, 'photo pseudo');
+        if (!users || users.length === 0) {
+            res.status(404).json({ message: "Aucun utilisateur trouvé avec une photo de profil" });
+        } else {
+            const profilePics = users.map(user => ({
+                userID: user._id,
+                profilePicDir: 'http://localhost:3002/images/' + user.photo,
+                pseudo: user.pseudo
+            }));
+            res.status(200).json({ profilePics });
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Une erreur s'est produite lors de la récupération des photos de profil" });
+    }
+});
+
+
+
+
 
 module.exports = {userRouter: router}

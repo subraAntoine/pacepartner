@@ -19,6 +19,8 @@ import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
 import deleteEntrainement from "../../Api/Entrainements/DeleteEntrainement";
 import addComments from "../../Api/Commentaires/AddComments";
 import getComments from "../../Api/Commentaires/GetComments";
+import Like from "../../Api/Commentaires/Like";
+import GetUsersInfo from "../../Api/User/GetUsersInfo";
 
 
 export default function CardEntrainement({entrainement, updateDataTrigger}) {
@@ -170,7 +172,7 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
             const commentsTemp = await Promise.all(commentaireList.map(async (comment) => {
                 const authorName = await GetUserPseudo(comment.author);
                 const authorPic = await getProfilePic(comment.author);
-                return { name: authorName, pic: authorPic.data.profilePic, content: comment.content };
+                return {id: comment._id, name: authorName, pic: authorPic.data.profilePic, content: comment.content, likes: comment.likedBy };
             }));
             console.log(commentsTemp)
             setCommentsInfo(commentsTemp);
@@ -179,12 +181,41 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
         }
     }
 
+    const getCommentsUsersInfo = async (commentaireList) => {
+        try{
+            const authorsId = commentaireList.map(commentaire => commentaire.author)
+            const commentairesInfo = await GetUsersInfo(authorsId)
+            return commentairesInfo.data.profilePics
+
+
+        }catch (err){
+            console.log(err)
+        }
+    }
+
     const handleLoadComments = async () => {
         try {
 
             const commentaireList = await getComments(entrainement._id);
-            setCommentList(commentaireList.data.data);
-            const commentairesInfo = await getCommentsInfo(commentaireList.data.data)
+            const commentListInfo = commentaireList.data.data
+            const commentsUserInfo = await getCommentsUsersInfo(commentaireList.data.data)
+
+
+
+            const commentaireAvecInfo = commentListInfo.map(commentaire => {
+                const authorInfos = commentsUserInfo.find(utilisateur => utilisateur.userID === commentaire.author);
+                console.log(authorInfos)
+                return{
+                    ...commentaire,
+                    auteurInfo: authorInfos
+                }
+            })
+
+            console.log(commentaireAvecInfo)
+
+
+
+            setCommentsInfo(commentaireAvecInfo)
 
 
             setUpdateCommentaire(false)
@@ -204,6 +235,17 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
 
         }else{
             setDisplayComments(false)
+        }
+
+    }
+
+    const handleLikeComments = async (commentaireID) => {
+        try {
+            const response = await Like(commentaireID)
+            handleLoadComments();
+
+        } catch (err) {
+            console.log(err)
         }
 
     }
@@ -321,7 +363,20 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
                         <div className="comments-items">
                             {
                                 commentsInfo && commentsInfo.map((comment, index) => {
-                                    return <h3 key={index}>{comment.content}{comment.name}</h3>
+                                    return (
+                                        <div key={index} className={"commentaire-container"}>
+                                            <p>{comment.content}</p>
+                                            <div className="comment-author-info">
+                                                <h3> {comment.auteurInfo.pseudo}</h3>
+                                                <img className={"comment-profile-picture"} src={comment.auteurInfo.profilePicDir} alt=""/>
+                                                {
+                                                    comment.likedBy.some(like => like === user._id) ? <MdFavorite onClick={() => handleLikeComments(comment._id)}></MdFavorite> : <MdFavoriteBorder onClick={() => handleLikeComments(comment._id)}></MdFavoriteBorder>
+                                                }
+                                                <p>{comment.likedBy.length}</p>
+                                            </div>
+
+                                        </div>
+                                    )
                                 })
                             }
                         </div>
