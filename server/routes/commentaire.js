@@ -94,6 +94,25 @@ router.post('/like/:commentaireID', authToken, async (req, res) => {
     }
 })
 
+router.post('/getLikes', authToken, async (req, res) => {
+    try{
+        const commentairesIds = req.body.commentaireIDs
+        const commentsInfo = await CommentaireModel.find({_id: { $in: commentairesIds}});
+        const commentsWithInfo = commentsInfo.map(comment => {
+            return {
+                commentID: comment._id,
+                likedBy: comment.likedBy
+            };
+        });
+
+        return res.status(200).json({data: commentsWithInfo})
+
+
+    } catch (err) {
+        res.status(500).json({message: "Erreur lors de la récupération des likes."})
+    }
+})
+
 
 
 

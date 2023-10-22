@@ -13,6 +13,7 @@ import AddToFavorites from "../../Api/Entrainements/AddToFavorites";
 import RemoveFavorite from "../../Api/Entrainements/RemoveFavorite";
 import AddComments from "../../Api/Commentaires/AddComments";
 import GetComments from "../../Api/Commentaires/GetComments";
+import GetLikes from "../../Api/Commentaires/GetLikes";
 
 import axios from "axios";
 import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
@@ -194,34 +195,46 @@ export default function CardEntrainement({entrainement, updateDataTrigger}) {
     }
 
     const handleLoadComments = async () => {
+
+
         try {
+            if (commentsInfo !== null){
+                // Si les commentaires sont déjà chargés, charger uniquement les informations des personnes ayant liké les commentaires.
+                const commentIDs = commentsInfo.map(commentaire => commentaire._id);
+                const likedUsersInfo = await GetLikes(commentIDs);
+                const likesInfo = likedUsersInfo.data.data
+                console.log(likedUsersInfo)
 
-            const commentaireList = await getComments(entrainement._id);
-            const commentListInfo = commentaireList.data.data
-            const commentsUserInfo = await getCommentsUsersInfo(commentaireList.data.data)
+                // Mettre à jour les informations des personnes qui ont liké les commentaires dans le state existant.
+                const updatedCommentsInfo = commentsInfo.map(commentaire => {
+                    const usersInfo = likesInfo.find(userInfo => userInfo.commentID === commentaire._id);
+                    return {
+                        ...commentaire,
+                        likedBy: usersInfo.likedBy
+                    };
+                });
 
+                console.log(updatedCommentsInfo)
 
+                setCommentsInfo(updatedCommentsInfo);
 
-            const commentaireAvecInfo = commentListInfo.map(commentaire => {
-                const authorInfos = commentsUserInfo.find(utilisateur => utilisateur.userID === commentaire.author);
-                console.log(authorInfos)
-                return{
-                    ...commentaire,
-                    auteurInfo: authorInfos
-                }
-            })
-
-            console.log(commentaireAvecInfo)
-
-
-
-            setCommentsInfo(commentaireAvecInfo)
-
-
-            setUpdateCommentaire(false)
-            setDisplayComments(true)
-
-
+            }else {
+                const commentaireList = await getComments(entrainement._id);
+                const commentListInfo = commentaireList.data.data
+                const commentsUserInfo = await getCommentsUsersInfo(commentaireList.data.data)
+                const commentaireAvecInfo = commentListInfo.map(commentaire => {
+                    const authorInfos = commentsUserInfo.find(utilisateur => utilisateur.userID === commentaire.author);
+                    console.log(authorInfos)
+                    return {
+                        ...commentaire,
+                        auteurInfo: authorInfos
+                    }
+                })
+                console.log(commentaireAvecInfo)
+                setCommentsInfo(commentaireAvecInfo)
+                setUpdateCommentaire(false)
+                setDisplayComments(true)
+            }
         } catch (err) {
             console.log(err)
         }
