@@ -8,15 +8,11 @@ import "./mapbox.css"
 
 //const MAPBOX_TOKEN = `${process.env.MAPBOX_TOKEN}`;
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiYW50b2luZXN1YnJhIiwiYSI6ImNsbDB5eWg4aTBrZGozanFyNmNtanJ6azAifQ.cMo1xIhNXAL4eeAL74tXjg';
-
-
 mapboxgl.accessToken = MAPBOX_TOKEN;
 const geocodingClient = MapboxGeocoding({ accessToken: mapboxgl.accessToken });
-
 function MapBox({onSuggestionSelected, disabled, defaultLoc, type, mapPlaceholder}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-
     const handleInputChange = async (input) => {
         setSearchTerm(input);
         if (input.trim() === '') {

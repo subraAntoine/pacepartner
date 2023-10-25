@@ -165,8 +165,6 @@
     margin: 10px;
     height: 50px;
     width: 100px;
-
-
     cursor: pointer;
     z-index: -1;
     border-radius: 25px 25px 0 0;
@@ -190,10 +188,79 @@
 .commentaire-container{
     display: flex;
     justify-content: space-between;
-    width: 80%;
-    border: solid 1px #cccccc;
+    width: 90%;
+   
     border-radius: 10px;
     margin: 5px 0;
     padding: 10px;
     align-items: center;
 }
+
+.comment-author-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.profile-info-content-wrap{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.comment-author-pseudo{
+ 
+    font-size: 0.9rem;
+}
+
+.comment-content{
+    background-color: var(--main-yellow);
+    padding: 10px;
+}
+    
+    .comment-general-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .comment-date{
+        font-size: 0.9rem;
+        font-weight: 400;
+        
+    }
+
+    .comment-likes-wrap{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .comments-icon-div{
+        position: absolute;
+        bottom: -58px;
+        background: white;
+        margin: 10px;
+        height: 50px;
+        width: 100px;
+        right: 50px;
+        cursor: pointer;
+        z-index: -1;
+        border-radius: 0 0 25px 25px ;
+        box-shadow: 0px 5px 5px 0 rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .comments-container{
+        margin-top: 40px;
+        
+    }
+
+    .comment-list-wrap{
+        max-height: 400px;
+        overflow:scroll;
+    
+    }
