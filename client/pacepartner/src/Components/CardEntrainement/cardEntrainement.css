@@ -188,7 +188,6 @@
 .commentaire-container{
     display: flex;
     justify-content: space-between;
-    width: 90%;
    
     border-radius: 10px;
     margin: 5px 0;
@@ -255,12 +254,98 @@
     }
 
     .comments-container{
-        margin-top: 40px;
+        margin-top: 20px;
+        border: solid 1px #ccc;
+        width: 90%;
+        padding: 20px;
+        border-radius: 10px;
+       
         
     }
+
 
     .comment-list-wrap{
         max-height: 400px;
         overflow:scroll;
+        width: 100%;
+        border-radius: 10px;
+        margin-right: 80px;
+        position: relative;
+        
     
+    }
+
+    .comment-input-wrap{
+        align-items: center;
+        display: flex;
+        justify-content: space-evenly;
+        padding: 20px 40px;
+        border-radius: 10px;
+        box-shadow:0px 0px 5px 0 rgba(0,0,0,0.2);
+        
+        margin: 20px 200px 0 200px;
+    }
+
+
+
+    .comments-items{
+        position: relative;
+        margin-right: 130px;
+        width: 100%;
+        
+    }
+
+    .commentaire-content{
+        width: 100%;
+    }
+    .comment-input{
+        width: 500px;
+        height: 40px;
+        padding-left: 10px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        border: solid 1px #ccc ;
+    }
+
+    .button-comment-input{
+        width: 150px;
+        height: 40px;
+        background: transparent;
+        z-index: 3;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        
+    }
+
+    .button-comment-input::before{
+        position: absolute;
+        content: '';
+        height: 100%;
+        width: 0;
+        top: 0;
+        left: 0;
+        background-color: var(--main-yellow);
+        z-index: -1;
+        transition: .5s ease-in-out;
+    
+
+    }
+
+    .button-comment-input:hover::before{
+        position: absolute;
+        content: '';
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--main-yellow);
+        z-index: -1;
+      
+    
+
     }

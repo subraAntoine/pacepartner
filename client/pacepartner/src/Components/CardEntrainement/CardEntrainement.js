@@ -14,6 +14,7 @@ import {
   MdComment,
   MdFavoriteBorder,
   MdFavorite,
+  MdCancel,
 } from "react-icons/md";
 import LeaveEntrainement from "../../Api/Entrainements/LeaveEntrainement";
 import AddToFavorites from "../../Api/Entrainements/AddToFavorites";
@@ -367,12 +368,17 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
           )}
         </div>
         <div className="comments-icon-div">
-          {
+          {displayComments ? (
+            <MdCancel
+              style={styleFavorite}
+              onClick={handleDisplayComments}
+            ></MdCancel>
+          ) : (
             <MdComment
               style={styleFavorite}
               onClick={handleDisplayComments}
             ></MdComment>
-          }
+          )}
         </div>
 
         <div className="entrainement-card-header">
@@ -589,13 +595,19 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
             </div>
           </div>
 
-          <div className="comment-input">
+          <div className="comment-input-wrap">
             <input
+              className="comment-input"
               value={commentContent}
               type="text"
+              placeholder="Nouveau commentaire"
               onChange={handleCommentContent}
             />
-            <button type={"submit"} onClick={handleAddComment}>
+            <button
+              className="button-comment-input"
+              type={"submit"}
+              onClick={handleAddComment}
+            >
               Envoyer
             </button>
           </div>
