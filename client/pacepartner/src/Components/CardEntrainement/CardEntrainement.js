@@ -30,6 +30,7 @@ import getComments from "../../Api/Commentaires/GetComments";
 import Like from "../../Api/Commentaires/Like";
 import GetUsersInfo from "../../Api/User/GetUsersInfo";
 import DeleteComment from "../../Api/Commentaires/DeleteComment";
+import { Link } from "react-router-dom";
 
 export default function CardEntrainement({ entrainement, updateDataTrigger }) {
   const [date, setDate] = useState(null);
@@ -110,9 +111,11 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
             entrainement.participants.map(async (participant) => {
               const participantName = await GetUserPseudo(participant);
               const participantPic = await getProfilePic(participant);
+
               return {
                 name: participantName,
                 pic: participantPic.data.profilePic,
+                _id: participant,
               };
             })
           );
@@ -440,14 +443,16 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
                   {participantsInfo &&
                     participantsInfo.map((participant, index) => {
                       return (
-                        <div className={"participants-entrainement-square"}>
-                          <span key={index}>{participant.name}</span>
-                          <img
-                            className={"participants-entrainement-pic"}
-                            src={participant.pic}
-                            alt=""
-                          />
-                        </div>
+                        <Link to={`/profile/${participant._id}`}>
+                          <div className={"participants-entrainement-square"}>
+                            <span key={index}>{participant.name}</span>
+                            <img
+                              className={"participants-entrainement-pic"}
+                              src={participant.pic}
+                              alt=""
+                            />
+                          </div>
+                        </Link>
                       );
                     })}
                 </span>

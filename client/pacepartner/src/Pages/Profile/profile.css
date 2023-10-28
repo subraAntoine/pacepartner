@@ -2,3 +2,36 @@
     margin-left: 420px;
     padding: 50px;
 }
+
+.user-profile-container{
+    padding: 20px;
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+/*  ======= Profile picture wrap ======= */
+
+.user-profile-picture-wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    gap: 20px;
+    height: 250px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+
+.user-profile-picture{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.user-profile-pseudo{
+    font-size: 1.5rem;
+}

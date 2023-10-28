@@ -1,0 +1,73 @@
+.perf-stats-component-container{
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    border-radius: 10px;
+
+}
+
+.perfs-stats-items-container{
+    display: flex;
+    justify-content: space-evenly;
+    height: 100%;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.perf-stat-item{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    height: 175px;
+    width: 175px;
+    border-radius: 50%;
+    border: solid 1px black;
+    position: relative;
+    overflow: hidden;
+    
+}
+
+.perf-stat-title{
+    text-align: center;
+}
+
+.perf-stat-item::before{
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 0%;
+    background-color: var(--main-yellow);
+    z-index: -1;
+    left: 0;
+    transition: .5s ease-in-out all;
+
+    
+}
+.perf-stat-item:hover::before{
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 100%;
+    background-color: var(--main-yellow);
+    z-index: -1;
+    left: 0;
+
+    
+}
+
+
+
+.perf-stat-number{
+    font-style: italic;
+    font-size: 1.1rem;
+
+}
+
+.perf-stats-component-title{
+    font-size: 1.4rem;
+}
