@@ -1,9 +1,10 @@
 import axios from "axios";
+import config from "../../config";
 
 const handleRegister = async (e, email, password, pseudo, nom, prenom, sports) => {
     e.preventDefault();
     try {
-        const response = await axios.post("http://localhost:3002/users/register", {
+        const response = await axios.post(`${config.apiUrl}/users/register`, {
             email,
             password,
             pseudo,

@@ -1,4 +1,5 @@
 import axios from "axios";
+import config from "../../config";
 
 
 const handleImageUpload = async (file) => {
@@ -6,7 +7,7 @@ const handleImageUpload = async (file) => {
         const formData = new FormData();
         formData.append("file", file);
 
-        const repsonse = await axios.post("http://localhost:3002/users/uploadProfilePic", formData, {
+        const repsonse = await axios.post(`${config.apiUrl}/users/uploadProfilePic`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },

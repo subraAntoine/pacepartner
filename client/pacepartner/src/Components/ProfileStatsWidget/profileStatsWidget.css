@@ -3,7 +3,7 @@
     flex: 1;
     border-radius: 10px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
   
 }
@@ -24,4 +24,34 @@
     background-color: var(--main-yellow);
     padding: 18px;
     border-radius: 5px; 
+}
+
+.user-personnal-profile-wrap{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+.user-personnal-profile-wrap::after{
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    width: 200px;
+    height: 5px;
+    background-color: var(--main-yellow);
+    border-radius: 5px;
+    z-index: 3;
+}
+
+.user-profile-description{
+    text-align: justify;
+    overflow: scroll;
+    max-height: 80px;
+}
+
+.user-profile-localisation{
+    font-size: 1.1rem;
 }

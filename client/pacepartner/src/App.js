@@ -19,7 +19,10 @@ function App() {
 
           <Route path="/parametres" element={<Parametres />} />
           <Route path="/profile/:userId" element={<Profile />} />
-          <Route path="/entrainement" element={<Entrainement />} />
+          <Route
+            path="/entrainement/:type/:userId"
+            element={<Entrainement />}
+          />
           <Route path="/communaute" element={<Communaute />} />
         </Routes>
       </Router>

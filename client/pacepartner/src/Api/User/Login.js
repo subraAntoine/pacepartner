@@ -1,9 +1,10 @@
 import axios from 'axios';
+import config from '../../config';
 const handleLogin = async (e, email, password) => {
     e.preventDefault();
     try {
 
-        const response = await axios.post("http://localhost:3002/users/login", {
+        const response = await axios.post(`${config.apiUrl}/users/login`, {
             email,
             password
         },

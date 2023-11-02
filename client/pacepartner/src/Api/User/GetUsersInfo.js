@@ -1,4 +1,5 @@
 import axios from "axios";
+import config from "../../config";
 
 const GetUsersInfo = async (users) => {
     try{
@@ -9,7 +10,7 @@ const GetUsersInfo = async (users) => {
 
         console.log(users)
 
-        const response = await axios.post(`http://localhost:3002/users/userProfileInfos`, data, {withCredentials: true})
+        const response = await axios.post(`${config.apiUrl}/users/userProfileInfos`, data, {withCredentials: true})
         return response;
     } catch (err) {
         return err;

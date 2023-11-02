@@ -1,7 +1,8 @@
 import axios from "axios";
+import config from "../../config";
 const handleUpdate = async (data) => {
     try {
-        const response = await axios.post('http://localhost:3002/users/update', data, {
+        const response = await axios.post(`${config.apiUrl}/users/update`, data, {
             withCredentials: true,
         });
         return response.data;

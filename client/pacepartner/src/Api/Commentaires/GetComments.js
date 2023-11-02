@@ -1,7 +1,8 @@
 import axios from "axios";
+import config from "../../config";
 const GetComments = async (entrainementID) => {
     try{
-        const response = await axios.get(`http://localhost:3002/commentaires/getComments/${entrainementID}`,{
+        const response = await axios.get(`${config.apiUrl}/commentaires/getComments/${entrainementID}`,{
             withCredentials: true
         })
         return response

@@ -1,8 +1,9 @@
 import axios from "axios";
+import config from "../../config";
 
 const Like = async (commentaireID) => {
     try {
-        const response = await axios.post(`http://localhost:3002/commentaires/like/${commentaireID}`, {}, {
+        const response = await axios.post(`${config.apiUrl}/commentaires/like/${commentaireID}`, {}, {
             withCredentials: true
         })
         return response;

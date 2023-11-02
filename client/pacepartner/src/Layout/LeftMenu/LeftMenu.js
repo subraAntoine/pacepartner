@@ -64,7 +64,7 @@ export default function LeftMenu() {
             <MdOutlineDiversity2 style={style} />
             <h3 className={"link-page-name"}>Communauté</h3>
           </Link>
-          <Link to={"/entrainement"} className="page-link">
+          <Link to={`/entrainement/match/${user._id}`} className="page-link">
             <MdOutlineDirectionsRun style={style} />
             <h3 className={"link-page-name"}>Entraînements</h3>
           </Link>

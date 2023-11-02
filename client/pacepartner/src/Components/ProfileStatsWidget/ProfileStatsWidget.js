@@ -11,7 +11,11 @@ export default function ProfileStatsWidget({ user }) {
 
   return (
     <div className="stats-widget-container">
-      <MdOutlineHistory style={style}></MdOutlineHistory>
+      <div className="user-personnal-profile-wrap">
+        <h4 className="user-profile-localisation">{user.localisation}</h4>
+        <p className="user-profile-description">{user.description}</p>
+      </div>
+
       <div className="profil-stat-item">
         <h4 className="stat-item-title">Amis</h4>
         <p className="stat-item-number">{user.friends.length}</p>

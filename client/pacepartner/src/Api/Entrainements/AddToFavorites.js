@@ -1,8 +1,9 @@
 import axios from "axios";
+import config from "../../config";
 const AddToFavorites = async (entrainementID) => {
 
     try {
-        const response = await axios.post(`http://localhost:3002/entrainements/addFavorite/${entrainementID}` , {},{
+        const response = await axios.post(`${config.apiUrl}/entrainements/addFavorite/${entrainementID}` , {},{
             withCredentials: true
         });
         console.log(response);

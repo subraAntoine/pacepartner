@@ -1,11 +1,11 @@
 import axios from "axios";
-
+import config from "../../config";
 
 
 
 const getUserInfo = async (userId) => {
     try {
-        const response = await axios.post(`http://localhost:3002/users/user`, {
+        const response = await axios.post(`${config.apiUrl}/users/user`, {
 
         }, {
             withCredentials: true

@@ -1,8 +1,9 @@
 import axios from "axios";
+import config from "../../config";
 
 const handleLogout = async () => {
     try {
-        const response = await axios.post("http://localhost:3002/users/logout", {
+        const response = await axios.post(`${config.apiUrl}/users/logout`, {
 
         }, {
             withCredentials: true

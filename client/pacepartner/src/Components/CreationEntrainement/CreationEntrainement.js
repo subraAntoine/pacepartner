@@ -7,6 +7,7 @@ import axios from "axios";
 import getUserInfo from "../../Api/User/UserInfo";
 import getGPSCoordinates from "../../Api/Entrainements/GetGPSCoordinates";
 import {useUser} from "../../Context/userContext";
+import config from "../../config";
 export default function CreationEntrainement ({toggleCreaEntrainement, updateDataTrigger}) {
 
     const [dataEntrainement, setDataEntrainement] = useState({});
@@ -63,7 +64,7 @@ export default function CreationEntrainement ({toggleCreaEntrainement, updateDat
     const handleCreateEntrainement = async (e) => {
         e.preventDefault();
         try {
-            axios.post('http://localhost:3002/entrainements/create', dataEntrainement, {withCredentials: true});
+            axios.post(`${config.apiUrl}/entrainements/create`, dataEntrainement, {withCredentials: true});
             setError(false)
             updateDataTrigger(true)
             toggleCreaEntrainement();

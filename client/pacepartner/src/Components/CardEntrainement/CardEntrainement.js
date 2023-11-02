@@ -413,20 +413,22 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
           <div className="card-participants-info">
             <div className="organisateur-info-entrainement">
               <h3>Organisateur : </h3>
-              <div className="organisateur-info-square">
-                <h3>
-                  <span className={"organisateur-name-entrainement"}>
-                    {organisateurName}
-                  </span>{" "}
-                </h3>
-                {organisateurPic && (
-                  <img
-                    src={organisateurPic}
-                    className={"organisateur-pic-entrainement"}
-                    alt=""
-                  />
-                )}
-              </div>
+              <Link to={`/profile/${entrainement.organisateur}`}>
+                <div className="organisateur-info-square">
+                  <h3>
+                    <span className={"organisateur-name-entrainement"}>
+                      {organisateurName}
+                    </span>{" "}
+                  </h3>
+                  {organisateurPic && (
+                    <img
+                      src={organisateurPic}
+                      className={"organisateur-pic-entrainement"}
+                      alt=""
+                    />
+                  )}
+                </div>
+              </Link>
             </div>
 
             <h3>

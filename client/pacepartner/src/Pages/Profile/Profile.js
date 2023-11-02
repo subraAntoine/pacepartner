@@ -3,7 +3,9 @@ import LeftMenu from "../../Layout/LeftMenu/LeftMenu";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from "../../Context/userContext";
+import { Link } from "react-router-dom";
 import "./profile.css";
+
 
 import getUserInfo from "../../Api/User/UserInfo";
 import getProfileInfo from "../../Api/User/GetProfileInfo";
@@ -16,6 +18,7 @@ export default function Profile() {
 
   const [ownProfile, setOwnProfile] = useState(false);
   const [title, setTitle] = useState(null);
+  const [userTrainingTitle, setUserTrainingTitle] = useState(null);
   const { user, setUser } = useUser();
   const [updateDataTrigger, setUpdateDataTrigger] = useState(false);
   const [userProfileInfo, setUserProfileInfo] = useState(null);
@@ -51,6 +54,8 @@ export default function Profile() {
         setUserProfileInfo(response.user);
         const userData = response.user;
         setTitle(`Profile de ${userData.pseudo}`);
+        setOwnProfile(false);
+        setUserTrainingTitle(`Entrainements créés par ${userData.pseudo}`);
       } catch (err) {
         console.log(err);
       }
@@ -62,8 +67,10 @@ export default function Profile() {
       setOwnProfile(true);
       setTitle("Mon profile");
       setUserProfileInfo(user);
+      setUserTrainingTitle("Entrainements créés");
     } else {
       fetchUserInfo();
+      setOwnProfile(false);
     }
   }, [updateDataTrigger, userId]);
 
@@ -84,6 +91,28 @@ export default function Profile() {
             </div>
             <ProfileStatsWidget user={userProfileInfo}></ProfileStatsWidget>
             <ProfilePerfStats user={userProfileInfo}></ProfilePerfStats>
+            {ownProfile === false && (
+              <div className="user-trainings-link-div">
+                <button>Ajouter en amis</button>
+              </div>
+            )}
+            <Link>
+              <div className="user-trainings-link-div">
+                <h3>{userTrainingTitle && userTrainingTitle}</h3>
+              </div>
+            </Link>
+            <Link>
+              <div className="user-trainings-link-div">
+                <h3>Entrainements rejoints</h3>
+              </div>
+            </Link>
+            {ownProfile && ownProfile === true && (
+              <Link>
+                <div className="user-trainings-link-div">
+                  <h3>Mes favoris</h3>
+                </div>
+              </Link>
+            )}
           </div>
         )}
       </div>
