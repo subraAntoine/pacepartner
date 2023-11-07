@@ -6,7 +6,6 @@ import { useUser } from "../../Context/userContext";
 import { Link } from "react-router-dom";
 import "./profile.css";
 
-
 import getUserInfo from "../../Api/User/UserInfo";
 import getProfileInfo from "../../Api/User/GetProfileInfo";
 
@@ -96,18 +95,18 @@ export default function Profile() {
                 <button>Ajouter en amis</button>
               </div>
             )}
-            <Link>
+            <Link to={`/entrainement/created/${userProfileInfo._id}`}>
               <div className="user-trainings-link-div">
                 <h3>{userTrainingTitle && userTrainingTitle}</h3>
               </div>
             </Link>
-            <Link>
+            <Link to={`/entrainement/joined/${userProfileInfo._id}`}>
               <div className="user-trainings-link-div">
                 <h3>Entrainements rejoints</h3>
               </div>
             </Link>
             {ownProfile && ownProfile === true && (
-              <Link>
+              <Link to={`/entrainement/favorite/${userProfileInfo._id}`}>
                 <div className="user-trainings-link-div">
                   <h3>Mes favoris</h3>
                 </div>

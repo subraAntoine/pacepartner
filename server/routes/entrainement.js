@@ -2,6 +2,7 @@ const express = require("express");
 const { EntrainementModel } = require("../model/Entrainement");
 const { UserModel } = require("../model/User");
 const authToken = require("../middlewares/authToken");
+const { default: mongoose } = require("mongoose");
 
 const router = express.Router();
 
@@ -83,15 +84,26 @@ router.get("/allMatch", authToken, async (req, res) => {
     const Lat = parseFloat(userLat);
     const Long = parseFloat(userLong);
     const currentDate = new Date();
+    const researchType = req.query.researchType;
+    const conditionUserId = [];
+
+    console.log(researchType);
+    console.log(conditionUserId);
 
     const sport = req.query.sportEntrainement;
     const type = req.query.typeEntrainement;
     const adaptedEntrainement = req.query.adaptedEntrainement;
-    console.log(adaptedEntrainement);
 
     const maxDistance = req.query.maxDistance * 1000;
 
     const user = await UserModel.findById(req.userId);
+
+    if (req.query.conditionUserId) {
+      const user2 = await UserModel.findById(req.query.conditionUserId);
+      if (user2) {
+        conditionUserId[0] = user2._id;
+      }
+    }
 
     if (!user) {
       res.status(500).json({ message: "Aucun utilisateur trouvé" });
@@ -115,10 +127,19 @@ router.get("/allMatch", authToken, async (req, res) => {
       matchConditions.push({ sportEntrainement: sport });
     }
 
+    if (researchType === "joined") {
+      matchConditions.push({ participants: { $in: conditionUserId } });
+    } else if (researchType === "match") {
+      matchConditions.push({ dateEntrainement: { $gte: currentDate } });
+    } else if (researchType === "created") {
+      matchConditions.push({
+        organisateur: { $in: conditionUserId },
+      });
+    }
+
     if (type !== "none") {
       matchConditions.push({ typeEntrainement: type });
     }
-    matchConditions.push({ dateEntrainement: { $gte: currentDate } });
 
     // Combinez les conditions en utilisant l'opérateur $and pour exiger à la fois le sport et le type
     if (matchConditions.length > 0) {
@@ -126,6 +147,7 @@ router.get("/allMatch", authToken, async (req, res) => {
     }
 
     const entrainements = await EntrainementModel.aggregate([filter]);
+    console.log(entrainements);
 
     if (adaptedEntrainement === "true") {
       const entrainementAvecScore = await Promise.all(

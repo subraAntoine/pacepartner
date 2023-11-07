@@ -24,6 +24,7 @@ export default function Entrainement() {
   const [sportFilter, setSportFilter] = useState("none");
   const [seanceFilter, setSeanceFilter] = useState("none");
   const [adaptedEntrainementList, setAdaptedEntrainementList] = useState(false);
+  const [userFilter, setUserFilter] = useState(null);
 
   const navigate = useNavigate();
 
@@ -69,7 +70,9 @@ export default function Entrainement() {
             maxDistance,
             sportFilter,
             seanceFilter,
-            adaptedEntrainementList
+            adaptedEntrainementList,
+            type,
+            userId
           );
           setEntrainementList(entrainementTemp.data.entrainements);
         }
@@ -79,9 +82,8 @@ export default function Entrainement() {
     };
 
     fetchData();
-
     fetchEntrainementList();
-  }, [updateDataTrigger]);
+  }, [updateDataTrigger, type]);
 
   const newEntrainementIconStyle = {
     color: "black",
