@@ -83,6 +83,8 @@ router.get("/allMatch", authToken, async (req, res) => {
 
     const Lat = parseFloat(userLat);
     const Long = parseFloat(userLong);
+    const enableDistanceFilter = req.query.enableDistanceFilter;
+    console.log(enableDistanceFilter);
     const currentDate = new Date();
     const researchType = req.query.researchType;
     const conditionUserId = [];
@@ -92,7 +94,10 @@ router.get("/allMatch", authToken, async (req, res) => {
     const type = req.query.typeEntrainement;
     const adaptedEntrainement = req.query.adaptedEntrainement;
 
-    const maxDistance = req.query.maxDistance * 1000;
+    const maxDistance =
+      enableDistanceFilter === "true"
+        ? req.query.maxDistance * 1000
+        : undefined;
 
     const user = await UserModel.findById(req.userId);
 
@@ -115,17 +120,7 @@ router.get("/allMatch", authToken, async (req, res) => {
       res.status(500).json({ message: "Aucun utilisateur trouvé" });
     }
 
-    const filter = {
-      $geoNear: {
-        near: {
-          type: "Point",
-          coordinates: [Long, Lat],
-        },
-        distanceField: "distance",
-        maxDistance: maxDistance,
-        spherical: true,
-      },
-    };
+    const filter = {};
 
     const matchConditions = [];
 
@@ -142,7 +137,6 @@ router.get("/allMatch", authToken, async (req, res) => {
         organisateur: { $in: conditionUserId },
       });
     } else if (researchType === "favorite") {
-      console.log("favorite");
       matchConditions.push({ _id: { $in: favTrainings } });
     }
 
@@ -151,6 +145,28 @@ router.get("/allMatch", authToken, async (req, res) => {
     }
 
     // Combinez les conditions en utilisant l'opérateur $and pour exiger à la fois le sport et le type
+
+    if (maxDistance !== undefined) {
+      filter.$geoNear = {
+        near: {
+          type: "Point",
+          coordinates: [Long, Lat],
+        },
+        distanceField: "distance",
+        maxDistance: maxDistance,
+        spherical: true,
+      };
+    } else {
+      filter.$geoNear = {
+        near: {
+          type: "Point",
+          coordinates: [Long, Lat],
+        },
+        distanceField: "distance",
+        spherical: true,
+      };
+    }
+
     if (matchConditions.length > 0) {
       filter.$geoNear.query = { $and: matchConditions };
     }

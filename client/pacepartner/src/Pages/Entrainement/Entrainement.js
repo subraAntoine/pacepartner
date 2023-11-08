@@ -10,6 +10,7 @@ import GetAllEntrainement from "../../Api/Entrainements/AllEntrainement";
 import CardEntrainement from "../../Components/CardEntrainement/CardEntrainement";
 import GetGPSCoordinates from "../../Api/Entrainements/GetGPSCoordinates";
 import Switch from "@mui/material/Switch";
+import { Checkbox } from "@mui/material";
 import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
 
 export default function Entrainement() {
@@ -28,6 +29,7 @@ export default function Entrainement() {
   const [userFilter, setUserFilter] = useState(null);
   const [pageTitle, setPageTitle] = useState(null);
   const [userPseudo, setUserPseudo] = useState(null);
+  const [enableDistanceFilter, setEnableDistanceFilter] = useState(false);
 
   const navigate = useNavigate();
 
@@ -75,7 +77,8 @@ export default function Entrainement() {
             seanceFilter,
             adaptedEntrainementList,
             type,
-            userId
+            userId,
+            enableDistanceFilter
           );
           setEntrainementList(entrainementTemp.data.entrainements);
         }
@@ -167,6 +170,12 @@ export default function Entrainement() {
     setUpdateDataTrigger(true);
   };
 
+  const handleDistanceFilter = (e) => {
+    setEnableDistanceFilter(!enableDistanceFilter);
+    setUpdateDataTrigger(true);
+    console.log(enableDistanceFilter);
+  };
+
   return (
     <>
       <LeftMenu></LeftMenu>
@@ -192,20 +201,31 @@ export default function Entrainement() {
           </div>
 
           <div className="filter-container">
-            <div className="distance-max-wrapper">
-              <h3 className={"distance-max-content"}>
-                Distance : {maxDistance} km
-              </h3>
-              <input
-                step={"10"}
-                className={"distance-max-slider"}
-                type="range"
-                max={"300"}
-                min={"0"}
-                defaultValue={"20"}
-                onChange={handleDistance}
-              />
+            <div className="distance-max-filter-activate-container">
+              <Checkbox onChange={handleDistanceFilter}></Checkbox>
+
+              {!enableDistanceFilter && (
+                <label className={"around-me-entrainment-label"}>
+                  Autour de moi
+                </label>
+              )}
             </div>
+            {enableDistanceFilter && (
+              <div className="distance-max-wrapper">
+                <h3 className={"distance-max-content"}>
+                  Distance : {maxDistance} km
+                </h3>
+                <input
+                  step={"10"}
+                  className={"distance-max-slider"}
+                  type="range"
+                  max={"300"}
+                  min={"0"}
+                  defaultValue={"20"}
+                  onChange={handleDistance}
+                />
+              </div>
+            )}
 
             <div className="sport-menu-wrapper">
               <h3 className={"sport-menu-title"}>Sport</h3>

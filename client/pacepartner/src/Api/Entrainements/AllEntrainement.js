@@ -9,7 +9,8 @@ const GetAllEntrainement = async (
   typeEntrainement,
   adaptedEntrainement,
   researchType,
-  conditionUserId
+  conditionUserId,
+  enableDistanceFilter
 ) => {
   try {
     const response = await axios.get(
@@ -24,6 +25,7 @@ const GetAllEntrainement = async (
           adaptedEntrainement,
           researchType,
           conditionUserId,
+          enableDistanceFilter
         },
         withCredentials: true, // Avec les paramètres de la requête
       }
