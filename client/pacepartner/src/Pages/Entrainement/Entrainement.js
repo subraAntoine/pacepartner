@@ -10,6 +10,7 @@ import GetAllEntrainement from "../../Api/Entrainements/AllEntrainement";
 import CardEntrainement from "../../Components/CardEntrainement/CardEntrainement";
 import GetGPSCoordinates from "../../Api/Entrainements/GetGPSCoordinates";
 import Switch from "@mui/material/Switch";
+import GetUserPseudo from "../../Api/Entrainements/UserPseudo";
 
 export default function Entrainement() {
   const { type, userId } = useParams();
@@ -25,6 +26,8 @@ export default function Entrainement() {
   const [seanceFilter, setSeanceFilter] = useState("none");
   const [adaptedEntrainementList, setAdaptedEntrainementList] = useState(false);
   const [userFilter, setUserFilter] = useState(null);
+  const [pageTitle, setPageTitle] = useState(null);
+  const [userPseudo, setUserPseudo] = useState(null);
 
   const navigate = useNavigate();
 
@@ -81,9 +84,51 @@ export default function Entrainement() {
       }
     };
 
+    const fetchUserPseudo = async () => {
+      try {
+        const response = await GetUserPseudo(userId);
+        setUserPseudo(response);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    switch (type) {
+      case "match":
+        setPageTitle("Parcourir les entraînements PacePartner");
+        break;
+      case "joined":
+        if (userId === user._id) {
+          setPageTitle("Mes entraînements rejoints");
+        } else {
+          fetchUserPseudo().then(() => {
+            setPageTitle(`Entraînements rejoints par ${userPseudo}`);
+          });
+        }
+        break;
+      case "created":
+        if (userId === user._id) {
+          setPageTitle("Mes entraînements créés");
+        } else {
+          fetchUserPseudo().then(() => {
+            setPageTitle(`Entraînements créés par ${userPseudo}`);
+          });
+        }
+        break;
+      case "favorite":
+        if (userId === user._id) {
+          setPageTitle("Mes entraînements favoris");
+        } else {
+          fetchUserPseudo().then(() => {
+            setPageTitle(`Entraînements favoris de ${userPseudo}`);
+          });
+        }
+        break;
+    }
+
     fetchData();
     fetchEntrainementList();
-  }, [updateDataTrigger, type]);
+  }, [updateDataTrigger, type, userPseudo, userId]);
 
   const newEntrainementIconStyle = {
     color: "black",
@@ -126,7 +171,7 @@ export default function Entrainement() {
     <>
       <LeftMenu></LeftMenu>
       <div className="entrainement-page-content-wrapper">
-        <h1> Parcourir les entraînements PacePartner </h1>
+        <h1> {pageTitle}</h1>
         {displayCreaEntrainement && (
           <CreationEntrainement
             updateDataTrigger={setUpdateDataTrigger}
@@ -135,7 +180,7 @@ export default function Entrainement() {
         )}
 
         <div className="activity-filter-container">
-          <h3 className={"filter-title"}>Filtrer vos entrainements !</h3>
+          <h3 className={"filter-title"}>Filtrer les entrainements :</h3>
           <div className="adapt-entrainment-div">
             <Switch
               color={"secondary"}

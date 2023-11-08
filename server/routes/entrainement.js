@@ -86,9 +86,7 @@ router.get("/allMatch", authToken, async (req, res) => {
     const currentDate = new Date();
     const researchType = req.query.researchType;
     const conditionUserId = [];
-
-    console.log(researchType);
-    console.log(conditionUserId);
+    const favTrainings = [];
 
     const sport = req.query.sportEntrainement;
     const type = req.query.typeEntrainement;
@@ -101,7 +99,15 @@ router.get("/allMatch", authToken, async (req, res) => {
     if (req.query.conditionUserId) {
       const user2 = await UserModel.findById(req.query.conditionUserId);
       if (user2) {
-        conditionUserId[0] = user2._id;
+        if (researchType === "favorite") {
+          user2.favoriteTrainings.forEach((training) => {
+            favTrainings.push(training);
+          });
+        }
+
+        if (user2) {
+          conditionUserId[0] = user2._id;
+        }
       }
     }
 
@@ -135,6 +141,9 @@ router.get("/allMatch", authToken, async (req, res) => {
       matchConditions.push({
         organisateur: { $in: conditionUserId },
       });
+    } else if (researchType === "favorite") {
+      console.log("favorite");
+      matchConditions.push({ _id: { $in: favTrainings } });
     }
 
     if (type !== "none") {
@@ -147,7 +156,6 @@ router.get("/allMatch", authToken, async (req, res) => {
     }
 
     const entrainements = await EntrainementModel.aggregate([filter]);
-    console.log(entrainements);
 
     if (adaptedEntrainement === "true") {
       const entrainementAvecScore = await Promise.all(

@@ -55,6 +55,7 @@ export default function Profile() {
         setTitle(`Profile de ${userData.pseudo}`);
         setOwnProfile(false);
         setUserTrainingTitle(`Entrainements créés par ${userData.pseudo}`);
+        localStorage.setItem("userPseudo", userData.pseudo);
       } catch (err) {
         console.log(err);
       }
@@ -66,9 +67,11 @@ export default function Profile() {
       setOwnProfile(true);
       setTitle("Mon profile");
       setUserProfileInfo(user);
+
       setUserTrainingTitle("Entrainements créés");
     } else {
       fetchUserInfo();
+
       setOwnProfile(false);
     }
   }, [updateDataTrigger, userId]);
