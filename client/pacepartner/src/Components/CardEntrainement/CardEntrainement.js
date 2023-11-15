@@ -32,7 +32,12 @@ import GetUsersInfo from "../../Api/User/GetUsersInfo";
 import DeleteComment from "../../Api/Commentaires/DeleteComment";
 import { Link } from "react-router-dom";
 
-export default function CardEntrainement({ entrainement, updateDataTrigger }) {
+export default function CardEntrainement({
+  entrainement,
+  updateDataTrigger,
+  index,
+  match,
+}) {
   const [date, setDate] = useState(null);
   const [organisateurName, setOrganisateurName] = useState(null);
   const [organisateurPic, setOrganisateurPic] = useState(null);
@@ -45,6 +50,8 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
   const [commentContent, setCommentContent] = useState("");
   const [commentList, setCommentList] = useState(null);
   const [updateCommentaire, setUpdateCommentaire] = useState(false);
+  const [hasHappened, setHasHappened] = useState(false);
+  const [bestTraining, setBestTraining] = useState(false);
   const style = {
     zIndex: "3",
     color: "black",
@@ -93,6 +100,25 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
       const year = NewDate.getFullYear();
 
       setDate(`${day}/${month}/${year}`);
+
+      const dateEntrainement = new Date(entrainement.dateEntrainement);
+      const dateNow = new Date(Date.now());
+
+      const heureEntrainement = entrainement.heureEntrainement.split(":");
+      dateEntrainement.setHours(heureEntrainement[0]);
+      dateEntrainement.setMinutes(heureEntrainement[1]);
+
+      if (match && index === 0) {
+        setBestTraining(true);
+      } else {
+        setBestTraining(false);
+      }
+
+      if (dateEntrainement < dateNow) {
+        setHasHappened(true);
+      } else {
+        setHasHappened(false);
+      }
 
       const getOrganisateurPseudo = async () => {
         try {
@@ -356,8 +382,25 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
 
   return (
     <div className={"global-card-container"}>
-      <div className="entrainement-card-wrap">
-        <div className="favorite-icon-div">
+      <div
+        className={
+          hasHappened
+            ? "entrainement-card-wrap  happenedTraining"
+            : "entrainement-card-wrap"
+        }
+      >
+        {bestTraining && (
+          <h3 className={"best-training-text"}>
+            Entrainement recommandé pour vous !
+          </h3>
+        )}
+        <div
+          className={
+            hasHappened
+              ? "favorite-icon-div happenedTraining"
+              : "favorite-icon-div"
+          }
+        >
           {user.favoriteTrainings.includes(entrainement._id) ? (
             <MdFavorite
               onClick={handleRemoveFavorite}
@@ -370,7 +413,13 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
             ></MdFavoriteBorder>
           )}
         </div>
-        <div className="comments-icon-div">
+        <div
+          className={
+            hasHappened
+              ? "comments-icon-div happenedTraining"
+              : "comments-icon-div"
+          }
+        >
           {displayComments ? (
             <MdCancel
               style={styleFavorite}
@@ -406,7 +455,9 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
           <h3>A {(entrainement.distance / 1000).toFixed(1)}km de vous !</h3>
           <h3>
             Date de l'entrainement :{" "}
-            <span className={"card-text-span"}>{date}</span>{" "}
+            <span className={"card-text-span"}>
+              {date} à {entrainement.heureEntrainement}
+            </span>{" "}
           </h3>
         </div>
         <div className="entrainement-card-body">
@@ -482,13 +533,20 @@ export default function CardEntrainement({ entrainement, updateDataTrigger }) {
                 (participant) => participant === user._id
               ) &&
               entrainement.participants.length <
-                entrainement.nbMaxParticipants && (
+                entrainement.nbMaxParticipants &&
+              !hasHappened && (
                 <Button
                   className={"join-entrainement-btn"}
                   onClick={() => setModalTrigger(!modalTrigger)}
                   text={"Rejoindre l'entrainement"}
                 ></Button>
               )}
+
+            {hasHappened && (
+              <h3 className={"entrainement-happened-text"}>
+                Cet entrainement est terminé.
+              </h3>
+            )}
 
             {modalTrigger && (
               <Modal

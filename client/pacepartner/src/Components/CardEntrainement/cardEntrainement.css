@@ -349,3 +349,49 @@
     
 
     }
+
+    .happenedTraining{
+        background: #ededed;
+    }
+
+    .entrainement-happened-text{
+        font-size: 1.3rem;
+        font-weight: 400;
+        margin-left: 50px;
+        margin-top: 80px;
+       text-decoration:wavy;
+        
+
+    }
+
+    .best-training-text{
+        position: absolute;
+        top: -40px;
+        font-size: 1.4rem;
+        left: 150px;
+    }
+
+    .best-training-text::after{
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 2px;
+        background: black;
+        margin-top: 10px;
+        animation: widthAnimation 1s ease-in-out infinite alternate;
+
+        
+    }
+
+    @keyframes widthAnimation{
+        0%{
+            width: 20%;
+        }
+        100%{
+            width: 100%;
+        }
+    }
+  

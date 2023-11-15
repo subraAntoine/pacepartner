@@ -132,6 +132,7 @@ router.get("/allMatch", authToken, async (req, res) => {
       matchConditions.push({ participants: { $in: conditionUserId } });
     } else if (researchType === "match") {
       matchConditions.push({ dateEntrainement: { $gte: currentDate } });
+      matchConditions.push({ organisateur: { $nin: conditionUserId } });
     } else if (researchType === "created") {
       matchConditions.push({
         organisateur: { $in: conditionUserId },

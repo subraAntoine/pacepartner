@@ -278,8 +278,9 @@ export default function Entrainement() {
               return (
                 <CardEntrainement
                   updateDataTrigger={setUpdateDataTrigger}
-                  key={index}
+                  index={index}
                   entrainement={entrainement}
+                  match={adaptedEntrainementList}
                 ></CardEntrainement>
               );
             })}
