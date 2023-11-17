@@ -18,7 +18,6 @@ const app = express();
 const corsOptions = {
   origin: "https://api.pacepartner.space",
   credentials: true,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 };
 
 app.use(cors(corsOptions));
