@@ -1,5 +1,5 @@
 const config = {
-  apiUrl: "https://pacepartner-api.vercel.app",
+  apiUrl: "https://api.pacepartner.app",
 };
 
 export default config;
