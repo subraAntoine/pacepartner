@@ -1,5 +1,5 @@
 const config = {
-  apiUrl: "https://api.pacepartner.app",
+  apiUrl: "https://api.pacepartner.space",
 };
 
 export default config;
