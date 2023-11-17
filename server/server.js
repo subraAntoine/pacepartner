@@ -15,7 +15,7 @@ const { commentaireRouter } = require("./routes/commentaire");
 const app = express();
 
 const corsOptions = {
-  origin: "https://pacepartner.vercel.app",
+  origin: "https://api.pacepartner.space",
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 };
