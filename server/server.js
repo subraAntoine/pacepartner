@@ -16,7 +16,7 @@ const { commentaireRouter } = require("./routes/commentaire");
 const app = express();
 
 const corsOptions = {
-  origin: "https://api.pacepartner.space",
+  origin: "https://pacepartner.space",
   credentials: true,
 };
 
