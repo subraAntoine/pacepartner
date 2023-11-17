@@ -285,4 +285,14 @@ router.post("/userProfileInfos", authToken, async (req, res) => {
   }
 });
 
+router.get('/test', async (req, res) => {
+  try {
+    res.json({ message: 'test' });
+  } catch (err) {
+    res.status(500).json({
+      message:
+        "Une erreur s'est produite lors de la récupération des photos de profil",
+    });
+  }
+});
 module.exports = { userRouter: router };
