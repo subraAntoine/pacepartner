@@ -101,6 +101,11 @@ router.get("/allMatch", authToken, async (req, res) => {
 
     const user = await UserModel.findById(req.userId);
 
+    if (!user) {
+      res.status(500).json({ message: "Aucun utilisateur trouvé" });
+      return;
+    }
+
     if (req.query.conditionUserId) {
       const user2 = await UserModel.findById(req.query.conditionUserId);
       if (user2) {
@@ -108,16 +113,18 @@ router.get("/allMatch", authToken, async (req, res) => {
           user2.favoriteTrainings.forEach((training) => {
             favTrainings.push(training);
           });
+        } else if (researchType === "match") {
+          if (user2._id.toString() !== user._id.toString()) {
+            res.status(400).json({
+              message: "Vous ne pouvez pas faire de recherche pour un autre",
+            });
+            return;
+          }
         }
-
         if (user2) {
           conditionUserId[0] = user2._id;
         }
       }
-    }
-
-    if (!user) {
-      res.status(500).json({ message: "Aucun utilisateur trouvé" });
     }
 
     const filter = {};

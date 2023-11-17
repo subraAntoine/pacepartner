@@ -1,0 +1,23 @@
+.error-page-container{
+    margin-left: 420px;
+    padding-top: 300px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.main-error-title{
+  
+    font-size: 50px;
+
+}
+
+.second-error-title{
+    font-size: 30px;
+}
+
+.logo-error-page{
+    width: 200px;
+}

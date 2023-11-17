@@ -84,6 +84,7 @@ export default function Entrainement() {
         }
       } catch (error) {
         console.log(error);
+        navigate("/error");
       }
     };
 
@@ -93,6 +94,7 @@ export default function Entrainement() {
         setUserPseudo(response);
       } catch (err) {
         console.log(err);
+        navigate("/error");
       }
     };
 

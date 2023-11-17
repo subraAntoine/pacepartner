@@ -7,6 +7,9 @@ import Profile from "./Pages/Profile/Profile";
 import Entrainement from "./Pages/Entrainement/Entrainement";
 import Parametres from "./Pages/Parametres/Parametres";
 import Communaute from "./Pages/Communaute/Communaute";
+import Error from "./Pages/Error/Error";
+import MailVerification from "./Pages/MailVerification/MailVerification";
+
 
 function App() {
   return (
@@ -24,6 +27,11 @@ function App() {
             element={<Entrainement />}
           />
           <Route path="/communaute" element={<Communaute />} />
+          <Route path="/error" element={<Error />} />
+          <Route
+            path="/emailVerification/:emailToken"
+            element={<MailVerification/>}
+          />
         </Routes>
       </Router>
     </div>

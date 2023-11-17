@@ -58,6 +58,7 @@ export default function Profile() {
         localStorage.setItem("userPseudo", userData.pseudo);
       } catch (err) {
         console.log(err);
+        navigate("/error");
       }
     };
 

@@ -31,6 +31,8 @@ const UserSchema = new mongoose.Schema({
     trainingJoined: [{type: mongoose.Schema.Types.ObjectId, ref: 'entrainements'}],
     favoriteTrainings: [{type: mongoose.Schema.Types.ObjectId, ref: 'entrainements'}],
     createdTrainings: [{type: mongoose.Schema.Types.ObjectId, ref: 'entrainements'}],
+    verified: {type: Boolean, default: false},
+    emailToken: {type: String},
 });
 
 const UserModel = mongoose.model('users', UserSchema);

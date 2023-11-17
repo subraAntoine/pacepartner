@@ -106,6 +106,7 @@ export default function Parametres() {
         setUpdateDataTrigger(true);
       } catch (err) {
         console.log(err);
+        navigate("/error");
       }
     } else {
       setEdit(!edit);
